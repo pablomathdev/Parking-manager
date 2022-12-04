@@ -1,11 +1,6 @@
-export interface ClientRequest {
-  request: any
-}
+import ClientRequest from '../helpers/client-request'
+import ServerResponse from '../helpers/server-response'
 
-export interface ServerResponse {
-  status: number
-  response?: any
-}
 export interface Controller {
   handle(clientRequest: ClientRequest): Promise<ServerResponse>
 }

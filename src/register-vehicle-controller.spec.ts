@@ -1,16 +1,48 @@
 
-import { Controller, ServerResponse, ClientRequest } from './protocols/controller'
+import ClientRequest from './helpers/client-request'
+import ServerResponse from './helpers/server-response'
+import { Controller } from './protocols/controller'
 
 interface Validation {
   validate(input: any): Error
 }
 
 interface Vehicle {
+  id?: string
   driver: string
   name: string
   model: string
   licensePlate: string
+  type: string
+  start_date: string
+  end_date: Date | null
 
+}
+
+interface Ticket {
+  id: string
+  id_vehicle_Fk: string
+  type_Fk: string
+  licensePlate_Fk: string
+  created_at: string
+}
+
+interface VehicleRepositoryInterface {
+  save({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<any>
+}
+
+class VehicleRepositoryStub implements VehicleRepositoryInterface {
+  async save ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
+    const ticket: Ticket = {
+      id: 'id_ticket',
+      id_vehicle_Fk: 'id_any_vehicle',
+      type_Fk: 'any_type',
+      licensePlate_Fk: 'XXXXX',
+      created_at: Date.now().toString()
+    }
+
+    return new Promise(resolve => resolve(ticket))
+  }
 }
 
 class ValidationStub implements Validation {
@@ -20,35 +52,48 @@ class ValidationStub implements Validation {
 }
 
 class RegisterVehicleController implements Controller {
-  constructor (private readonly validation: Validation) {}
+  constructor (private readonly validation: Validation,
+    private readonly VehicleRepository: VehicleRepositoryInterface) {}
 
-  async handle (request: ClientRequest): Promise<ServerResponse> {
-    const error = this.validation.validate(request.request)
-    if (error) {
-      return {
-        status: 400,
-        response: error
+  async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
+    try {
+      const error = this.validation.validate(clientRequest.request)
+      if (error) {
+        return {
+          status: 400,
+          response: error
+        }
       }
-    }
-    return {
-      status: 200,
-      response: {}
+
+      await this.VehicleRepository.save(clientRequest.request)
+
+      return {
+        status: 200
+      }
+    } catch (err) {
+      return {
+        status: 500,
+        response: err
+      }
     }
   }
 }
 
 const systemUnderTestFactory = (): any => {
+  const vehicleRepositoryStub = new VehicleRepositoryStub()
   const validationStub = new ValidationStub()
-  const sut = new RegisterVehicleController(validationStub)
-  return { sut, validationStub }
+  const sut = new RegisterVehicleController(validationStub, vehicleRepositoryStub)
+  return { sut, validationStub, vehicleRepositoryStub }
 }
 
 const fakeVehicle: Vehicle = {
   name: 'any_name',
   driver: 'any_driver',
   model: 'any_model',
-  licensePlate: 'XXXXX'
-
+  licensePlate: 'XXXXX',
+  type: 'any_type',
+  start_date: Date.now().toString(),
+  end_date: null
 }
 
 describe('register vehicle controller', () => {
@@ -75,5 +120,16 @@ describe('register vehicle controller', () => {
     const response = await sut.handle(clientRequest)
     expect(response.status).toBe(400)
     expect(response.response).toEqual(new Error())
+  })
+  test('should call vehicle repository with correct values', async () => {
+    const { sut, vehicleRepositoryStub } = systemUnderTestFactory()
+    const saveSpy = jest.spyOn(vehicleRepositoryStub, 'save')
+
+    const clientRequest: ClientRequest = {
+      request: fakeVehicle
+    }
+
+    await sut.handle(clientRequest)
+    expect(saveSpy).toHaveBeenCalledWith(fakeVehicle)
   })
 })
