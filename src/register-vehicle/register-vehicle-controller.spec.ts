@@ -1,11 +1,7 @@
-
-import ClientRequest from './helpers/client-request'
-import ServerResponse from './helpers/server-response'
-import { Controller } from './protocols/controller'
-
-interface Validation {
-  validate(input: any): Error
-}
+import Validation from '../protocols/validation'
+import ClientRequest from '../helpers/client-request'
+import RegisterVehicleController from '../register-vehicle/register-vehicle-controller'
+import UseCase from '../protocols/use-case'
 
 interface Vehicle {
   id?: string
@@ -27,10 +23,6 @@ interface Ticket {
   created_at: string
 }
 
-interface UseCase {
-  execute(input: any): Promise<any>
-}
-
 class SaveVehicleUseCase implements UseCase {
   async execute ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
     const ticket: Ticket = {
@@ -48,38 +40,6 @@ class SaveVehicleUseCase implements UseCase {
 class ValidationStub implements Validation {
   validate (input: ClientRequest): any {
     return null
-  }
-}
-
-class RegisterVehicleController implements Controller {
-  constructor (private readonly validation: Validation,
-    private readonly saveVehicleUseCase: UseCase) {}
-
-  async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
-    try {
-      const error = this.validation.validate(clientRequest.request)
-      if (error) {
-        return {
-          status: 400,
-          response: error
-        }
-      }
-
-      const ticket = await this.saveVehicleUseCase.execute(clientRequest.request)
-      if (!ticket) {
-        throw new Error('Error: could not create ticket!')
-      } else {
-        return {
-          status: 201,
-          response: ticket
-        }
-      }
-    } catch (err) {
-      return {
-        status: 500,
-        response: err
-      }
-    }
   }
 }
 
