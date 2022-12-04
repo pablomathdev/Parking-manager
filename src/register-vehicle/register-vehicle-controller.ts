@@ -6,7 +6,7 @@ import ServerResponse from '../helpers/server-response'
 
 export default class RegisterVehicleController implements Controller {
   constructor (private readonly validation: Validation,
-    private readonly saveVehicleUseCase: UseCase) {}
+    private readonly registerVehicleUseCase: UseCase) {}
 
   async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
     try {
@@ -18,7 +18,7 @@ export default class RegisterVehicleController implements Controller {
         }
       }
 
-      const ticket = await this.saveVehicleUseCase.execute(clientRequest.request)
+      const ticket = await this.registerVehicleUseCase.execute(clientRequest.request)
       if (!ticket) {
         throw new Error('Error: could not create ticket!')
       } else {

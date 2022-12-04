@@ -23,7 +23,7 @@ interface Ticket {
   created_at: string
 }
 
-class SaveVehicleUseCase implements UseCase {
+class RegisterVehicleUseCase implements UseCase {
   async execute ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
     const ticket: Ticket = {
       id: 'id_ticket',
@@ -44,10 +44,10 @@ class ValidationStub implements Validation {
 }
 
 const systemUnderTestFactory = (): any => {
-  const saveVehicleUseCaseStub = new SaveVehicleUseCase()
+  const registerVehicleUseCaseStub = new RegisterVehicleUseCase()
   const validationStub = new ValidationStub()
-  const sut = new RegisterVehicleController(validationStub, saveVehicleUseCaseStub)
-  return { sut, validationStub, saveVehicleUseCaseStub }
+  const sut = new RegisterVehicleController(validationStub, registerVehicleUseCaseStub)
+  return { sut, validationStub, registerVehicleUseCaseStub }
 }
 
 const fakeVehicle: Vehicle = {
@@ -86,15 +86,15 @@ describe('register vehicle controller', () => {
     expect(response.response).toEqual(new Error())
   })
   test('should call vehicle usecase with correct values', async () => {
-    const { sut, saveVehicleUseCaseStub } = systemUnderTestFactory()
-    const saveSpy = jest.spyOn(saveVehicleUseCaseStub, 'execute')
+    const { sut, registerVehicleUseCaseStub } = systemUnderTestFactory()
+    const executeSpy = jest.spyOn(registerVehicleUseCaseStub, 'execute')
 
     const clientRequest: ClientRequest = {
       request: fakeVehicle
     }
 
     await sut.handle(clientRequest)
-    expect(saveSpy).toHaveBeenCalledWith(fakeVehicle)
+    expect(executeSpy).toHaveBeenCalledWith(fakeVehicle)
   })
   test('should returns ticket if vehicle usecase returns a ticket', async () => {
     const { sut } = systemUnderTestFactory()
@@ -115,8 +115,8 @@ describe('register vehicle controller', () => {
     )
   })
   test('should throw if vehicle use case return falsy', async () => {
-    const { sut, saveVehicleUseCaseStub } = systemUnderTestFactory()
-    jest.spyOn(saveVehicleUseCaseStub, 'execute').mockResolvedValueOnce(null)
+    const { sut, registerVehicleUseCaseStub } = systemUnderTestFactory()
+    jest.spyOn(registerVehicleUseCaseStub, 'execute').mockResolvedValueOnce(null)
 
     const clientRequest: ClientRequest = {
       request: fakeVehicle
