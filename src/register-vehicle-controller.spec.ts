@@ -38,7 +38,7 @@ class VehicleRepositoryStub implements VehicleRepositoryInterface {
       id_vehicle_Fk: 'id_any_vehicle',
       type_Fk: 'any_type',
       licensePlate_Fk: 'XXXXX',
-      created_at: Date.now().toString()
+      created_at: 'now'
     }
 
     return new Promise(resolve => resolve(ticket))
@@ -65,7 +65,13 @@ class RegisterVehicleController implements Controller {
         }
       }
 
-      await this.VehicleRepository.save(clientRequest.request)
+      const ticket = await this.VehicleRepository.save(clientRequest.request)
+      if (ticket) {
+        return {
+          status: 201,
+          response: ticket
+        }
+      }
 
       return {
         status: 200
@@ -131,5 +137,23 @@ describe('register vehicle controller', () => {
 
     await sut.handle(clientRequest)
     expect(saveSpy).toHaveBeenCalledWith(fakeVehicle)
+  })
+  test('should returns ticket if vehicle repository returns a ticket', async () => {
+    const { sut } = systemUnderTestFactory()
+
+    const clientRequest: ClientRequest = {
+      request: fakeVehicle
+    }
+
+    const response = await sut.handle(clientRequest)
+    expect(response.status).toBe(201)
+    expect(response.response).toEqual({
+      id: 'id_ticket',
+      id_vehicle_Fk: 'id_any_vehicle',
+      type_Fk: 'any_type',
+      licensePlate_Fk: 'XXXXX',
+      created_at: 'now'
+    }
+    )
   })
 })
