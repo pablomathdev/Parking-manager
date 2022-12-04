@@ -2,7 +2,7 @@
 import { Controller, ServerResponse, ClientRequest } from './protocols/controller'
 
 interface Validation {
-  validate(input: any): boolean
+  validate(input: any): Error
 }
 
 interface Vehicle {
@@ -14,8 +14,8 @@ interface Vehicle {
 }
 
 class ValidationStub implements Validation {
-  validate (input: any): boolean {
-    return true
+  validate (input: ClientRequest): any {
+    return null
   }
 }
 
@@ -23,10 +23,16 @@ class RegisterVehicleController implements Controller {
   constructor (private readonly validation: Validation) {}
 
   async handle (request: ClientRequest): Promise<ServerResponse> {
-    this.validation.validate(request.data)
+    const error = this.validation.validate(request.request)
+    if (error) {
+      return {
+        status: 400,
+        response: error
+      }
+    }
     return {
       status: 200,
-      data: {}
+      response: {}
     }
   }
 }
@@ -50,11 +56,24 @@ describe('register vehicle controller', () => {
     const { sut, validationStub } = systemUnderTestFactory()
     const validateSpy = jest.spyOn(validationStub, 'validate')
 
-    const clientRequest = {
-      data: fakeVehicle
+    const clientRequest: ClientRequest = {
+      request: fakeVehicle
     }
 
     await sut.handle(clientRequest)
     expect(validateSpy).toHaveBeenCalledWith(fakeVehicle)
+  })
+  test('should returns error if validation returns a error of validation', async () => {
+    const { sut, validationStub } = systemUnderTestFactory()
+    jest.spyOn(validationStub, 'validate')
+      .mockReturnValueOnce(new Error())
+
+    const clientRequest: ClientRequest = {
+      request: fakeVehicle
+    }
+
+    const response = await sut.handle(clientRequest)
+    expect(response.status).toBe(400)
+    expect(response.response).toEqual(new Error())
   })
 })

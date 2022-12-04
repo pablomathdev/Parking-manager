@@ -1,10 +1,10 @@
 export interface ClientRequest {
-  data: any
+  request: any
 }
 
 export interface ServerResponse {
   status: number
-  data: any
+  response?: any
 }
 export interface Controller {
   handle(clientRequest: ClientRequest): Promise<ServerResponse>
