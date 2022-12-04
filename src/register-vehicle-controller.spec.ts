@@ -66,15 +66,13 @@ class RegisterVehicleController implements Controller {
       }
 
       const ticket = await this.saveVehicleUseCase.execute(clientRequest.request)
-      if (ticket) {
+      if (!ticket) {
+        throw new Error('Error: could not create ticket!')
+      } else {
         return {
           status: 201,
           response: ticket
         }
-      }
-
-      return {
-        status: 200
       }
     } catch (err) {
       return {
@@ -155,5 +153,17 @@ describe('register vehicle controller', () => {
       created_at: 'now'
     }
     )
+  })
+  test('should throw if vehicle use case return falsy', async () => {
+    const { sut, saveVehicleUseCaseStub } = systemUnderTestFactory()
+    jest.spyOn(saveVehicleUseCaseStub, 'execute').mockResolvedValueOnce(null)
+
+    const clientRequest: ClientRequest = {
+      request: fakeVehicle
+    }
+
+    const response = await sut.handle(clientRequest)
+    expect(response.status).toBe(500)
+    expect(response.response).toEqual(new Error('Error: could not create ticket!'))
   })
 })
