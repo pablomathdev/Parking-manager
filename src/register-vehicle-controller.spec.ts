@@ -27,12 +27,12 @@ interface Ticket {
   created_at: string
 }
 
-interface VehicleRepositoryInterface {
-  save({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<any>
+interface UseCase {
+  execute(input: any): Promise<any>
 }
 
-class VehicleRepositoryStub implements VehicleRepositoryInterface {
-  async save ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
+class SaveVehicleUseCase implements UseCase {
+  async execute ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
     const ticket: Ticket = {
       id: 'id_ticket',
       id_vehicle_Fk: 'id_any_vehicle',
@@ -53,7 +53,7 @@ class ValidationStub implements Validation {
 
 class RegisterVehicleController implements Controller {
   constructor (private readonly validation: Validation,
-    private readonly VehicleRepository: VehicleRepositoryInterface) {}
+    private readonly saveVehicleUseCase: UseCase) {}
 
   async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
     try {
@@ -65,7 +65,7 @@ class RegisterVehicleController implements Controller {
         }
       }
 
-      const ticket = await this.VehicleRepository.save(clientRequest.request)
+      const ticket = await this.saveVehicleUseCase.execute(clientRequest.request)
       if (ticket) {
         return {
           status: 201,
@@ -86,10 +86,10 @@ class RegisterVehicleController implements Controller {
 }
 
 const systemUnderTestFactory = (): any => {
-  const vehicleRepositoryStub = new VehicleRepositoryStub()
+  const saveVehicleUseCaseStub = new SaveVehicleUseCase()
   const validationStub = new ValidationStub()
-  const sut = new RegisterVehicleController(validationStub, vehicleRepositoryStub)
-  return { sut, validationStub, vehicleRepositoryStub }
+  const sut = new RegisterVehicleController(validationStub, saveVehicleUseCaseStub)
+  return { sut, validationStub, saveVehicleUseCaseStub }
 }
 
 const fakeVehicle: Vehicle = {
@@ -127,9 +127,9 @@ describe('register vehicle controller', () => {
     expect(response.status).toBe(400)
     expect(response.response).toEqual(new Error())
   })
-  test('should call vehicle repository with correct values', async () => {
-    const { sut, vehicleRepositoryStub } = systemUnderTestFactory()
-    const saveSpy = jest.spyOn(vehicleRepositoryStub, 'save')
+  test('should call vehicle usecase with correct values', async () => {
+    const { sut, saveVehicleUseCaseStub } = systemUnderTestFactory()
+    const saveSpy = jest.spyOn(saveVehicleUseCaseStub, 'execute')
 
     const clientRequest: ClientRequest = {
       request: fakeVehicle
@@ -138,7 +138,7 @@ describe('register vehicle controller', () => {
     await sut.handle(clientRequest)
     expect(saveSpy).toHaveBeenCalledWith(fakeVehicle)
   })
-  test('should returns ticket if vehicle repository returns a ticket', async () => {
+  test('should returns ticket if vehicle usecase returns a ticket', async () => {
     const { sut } = systemUnderTestFactory()
 
     const clientRequest: ClientRequest = {
