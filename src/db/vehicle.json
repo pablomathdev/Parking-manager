@@ -1,0 +1,13 @@
+
+[
+  {
+    "id": "1",
+    "driver": "any_driver",
+    "name": "any_name",
+    "model": "any_model",
+    "licensePlate": "XXXXXX",
+    "type": "car",
+    "start_date": "now",
+    "end_date": null
+  }
+]
