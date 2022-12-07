@@ -1,8 +1,8 @@
-import Controller from '../protocols/controller'
-import Validation from '../protocols/validation'
-import UseCase from '../protocols/use-case'
-import ClientRequest from '../helpers/client-request'
-import ServerResponse from '../helpers/server-response'
+import Controller from '../../protocols/controller'
+import Validation from '../../protocols/validation'
+import UseCase from '../../protocols/use-case'
+import ClientRequest from '../../../helpers/client-request'
+import ServerResponse from '../../../helpers/server-response'
 
 export default class RegisterVehicleController implements Controller {
   constructor (private readonly validation: Validation,

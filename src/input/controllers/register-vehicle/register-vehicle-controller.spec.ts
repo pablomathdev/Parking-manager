@@ -1,7 +1,7 @@
-import Validation from '../protocols/validation'
-import ClientRequest from '../helpers/client-request'
-import RegisterVehicleController from '../register-vehicle/register-vehicle-controller'
-import UseCase from '../protocols/use-case'
+import Validation from '../../protocols/validation'
+import ClientRequest from '../../../helpers/client-request'
+import RegisterVehicleController from './register-vehicle-controller'
+import UseCase from '../../protocols/use-case'
 
 interface Vehicle {
   id?: string
