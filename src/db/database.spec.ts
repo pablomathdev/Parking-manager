@@ -65,4 +65,10 @@ describe('Database', () => {
     const result = await sut.save(item)
     expect(result).toEqual(item)
   })
+  test('should not save if item already exists', async () => {
+    const sut = new Database('test')
+    await sut.save(item)
+    const result = await sut.save(item)
+    expect(result).toEqual(new Error('item already exists !'))
+  })
 })
