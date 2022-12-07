@@ -2,18 +2,7 @@ import Validation from '../../protocols/validation'
 import ClientRequest from '../../helpers/client-request'
 import RegisterVehicleController from './register-vehicle-controller'
 import UseCase from '../../protocols/use-case'
-
-interface Vehicle {
-  id?: string
-  driver: string
-  name: string
-  model: string
-  licensePlate: string
-  type: string
-  start_date: string
-  end_date: Date | null
-
-}
+import Vehicle from '../../../domain/entities/vehicle'
 
 interface Ticket {
   id: string
