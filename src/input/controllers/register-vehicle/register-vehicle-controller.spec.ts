@@ -1,5 +1,5 @@
 import Validation from '../../protocols/validation'
-import ClientRequest from '../../../helpers/client-request'
+import ClientRequest from '../../helpers/client-request'
 import RegisterVehicleController from './register-vehicle-controller'
 import UseCase from '../../protocols/use-case'
 
