@@ -8,6 +8,8 @@ module.exports = {
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/return-await': 'off',
-    'prefer-const': 'off'
+    'prefer-const': 'off',
+    'n/no-path-concat': 'off',
+    '@typescript-eslint/prefer-readonly': 'off'
   }
 }
