@@ -3,22 +3,14 @@ import ClientRequest from '../../helpers/client-request'
 import RegisterVehicleController from './register-vehicle-controller'
 import UseCase from '../../protocols/use-case'
 import Vehicle from '../../../domain/entities/vehicle'
-
-interface Ticket {
-  id: string
-  id_vehicle_Fk: string
-  type_Fk: string
-  licensePlate_Fk: string
-  created_at: string
-}
-
+import Ticket from '../../../domain/entities/ticket'
 class RegisterVehicleUseCase implements UseCase {
   async execute ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
     const ticket: Ticket = {
       id: 'id_ticket',
-      id_vehicle_Fk: 'id_any_vehicle',
-      type_Fk: 'any_type',
-      licensePlate_Fk: 'XXXXX',
+      id_vehicle: 'id_any_vehicle',
+      type: 'any_type',
+      licensePlate: 'XXXXX',
       created_at: 'now'
     }
 
@@ -45,8 +37,8 @@ const fakeVehicle: Vehicle = {
   model: 'any_model',
   licensePlate: 'XXXXX',
   type: 'any_type',
-  start_date: Date.now().toString(),
-  end_date: null
+  end_date: null,
+  start_date: 'now'
 }
 
 describe('register vehicle controller', () => {
@@ -96,9 +88,9 @@ describe('register vehicle controller', () => {
     expect(response.status).toBe(201)
     expect(response.response).toEqual({
       id: 'id_ticket',
-      id_vehicle_Fk: 'id_any_vehicle',
-      type_Fk: 'any_type',
-      licensePlate_Fk: 'XXXXX',
+      id_vehicle: 'id_any_vehicle',
+      type: 'any_type',
+      licensePlate: 'XXXXX',
       created_at: 'now'
     }
     )
