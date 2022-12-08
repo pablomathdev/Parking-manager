@@ -2,15 +2,20 @@ import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 
 export default class Vehicle {
-  private readonly id?: string
-  private readonly start_date: string
+  id?: string
+  driver: string
+  name: string
+  model: string
+  licensePlate: string
+  type: string
+  start_date: string
   end_date: string | null
   constructor (
-    private readonly driver: string,
-    private readonly name: string,
-    private readonly model: string,
-    private readonly licensePlate: string,
-    private readonly type: string
+    driver: string,
+    name: string,
+    model: string,
+    licensePlate: string,
+    type: string
   ) {
     if (!this.id) {
       this.id = uuidv4()
