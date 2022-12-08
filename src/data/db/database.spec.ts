@@ -1,9 +1,13 @@
 import DatabaseJson from './database'
+import { v4 as uuidv4 } from 'uuid'
+import dayjs from 'dayjs'
+jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 const item = {
-  id: '1',
+  id: uuidv4(),
   name: 'any_name',
-  email: 'any_email'
+  email: 'any_email',
+  created_at: dayjs().format('ddd, MMM D, YYYY h:mm A')
 }
 
 describe('Database', () => {

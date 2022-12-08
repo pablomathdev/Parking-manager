@@ -6,7 +6,6 @@ import 'uuid'
 
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
-// MockDate.set('2022-12-08')
 class DatabaseStub implements Database {
   async save (element: any): Promise<any> {
     return new Promise(resolve => resolve(new Vehicle(
