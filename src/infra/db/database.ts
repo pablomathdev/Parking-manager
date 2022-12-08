@@ -1,7 +1,8 @@
 import fs from 'fs/promises'
 import path from 'path'
+import Database from '../../domain/interfaces/database-interface'
 
-export default class Database {
+export default class DatabaseJson implements Database {
   private readonly file: string
 
   constructor (file: string) {

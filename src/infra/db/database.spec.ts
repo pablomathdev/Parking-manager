@@ -1,4 +1,4 @@
-import Database from './database'
+import DatabaseJson from './database'
 
 // interface Vehicle {
 //   id?: string
@@ -20,16 +20,16 @@ const item = {
 
 describe('Database', () => {
   afterEach(async () => {
-    await new Database('test').clear()
+    await new DatabaseJson('test').clear()
   })
   test('should save item in json', async () => {
-    const sut = new Database('test')
+    const sut = new DatabaseJson('test')
 
     const result = await sut.save(item)
     expect(result).toEqual(item)
   })
   test('should not save if item already exists', async () => {
-    const sut = new Database('test')
+    const sut = new DatabaseJson('test')
     await sut.save(item)
     const result = await sut.save(item)
     expect(result).toEqual(new Error('item already exists !'))
