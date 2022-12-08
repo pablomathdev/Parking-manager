@@ -3,24 +3,18 @@ import Ticket from '../domain/entities/ticket'
 import VehicleDTO from '../input/dtos/vehicle-DTO'
 import Vehicle from '../domain/entities/vehicle'
 import Repository from '../domain/interfaces/repository-interface'
-
+import VehicleRepositoryInterface from '../domain/interfaces/vehicle-repository-interface'
 import 'uuid'
-import { VehicleRepositoryInterface } from '../domain/interfaces/vehicle-repository-interface'
+
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
+
+jest
+  .useFakeTimers()
+  .setSystemTime(new Date('2022-12-08'))
 
 class VehicleRepositoryStub implements VehicleRepositoryInterface {
   async update (id: string, updates: any): Promise<any> {
-    const item = {
-      id,
-      driver: 'any_driver',
-      name: 'any_name',
-      model: 'any_model',
-      licensePlate: 'XXXXX',
-      type: 'any_type',
-      created_at: 'now'
-    }
-    const itemUpdated = { ...item, ...updates }
-    return new Promise(resolve => resolve(itemUpdated))
+    return null
   }
 
   async create (element: any): Promise<any> {
@@ -114,5 +108,27 @@ describe('Register Vehicle Use Case', () => {
 
     await sut.execute(vehicle)
     expect(createSpy).toHaveBeenCalledWith(vehicleObj.id, { id_ticket: 'testId' })
+  })
+  test('should returns a ticket if created vehicle successfully', async () => {
+    const { sut } = systemUnderTest()
+
+    const vehicle: VehicleDTO = {
+      name: 'any_name',
+      driver: 'any_driver',
+      model: 'any_model',
+      licensePlate: 'XXXXX',
+      type: 'any_type'
+    }
+
+    const result = await sut.execute(vehicle)
+
+    expect(result).toEqual(
+      {
+        created_at: 'Wed, Dec 7, 2022 8:00 PM',
+        id: 'testId',
+        id_vehicle: 'testId',
+        licensePlate: 'XXXXX',
+        type: 'any_type'
+      })
   })
 })
