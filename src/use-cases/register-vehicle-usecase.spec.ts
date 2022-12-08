@@ -5,9 +5,10 @@ import Vehicle from '../domain/entities/vehicle'
 import Repository from '../domain/interfaces/repository-interface'
 
 import 'uuid'
+import { VehicleRepositoryInterface } from '../domain/interfaces/vehicle-repository-interface'
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
-class VehicleRepositoryStub implements Repository {
+class VehicleRepositoryStub implements VehicleRepositoryInterface {
   async update (id: string, updates: any): Promise<any> {
     throw new Error('Method not implemented.')
   }
@@ -18,17 +19,13 @@ class VehicleRepositoryStub implements Repository {
 }
 
 class TicketRepositoryStub implements Repository {
-  async update (id: string, updates: any): Promise<any> {
-    throw new Error('Method not implemented.')
-  }
-
   async create (element: any): Promise<any> {
     return element
   }
 }
 
 class RegisterVehicleUseCase implements UseCase {
-  constructor (private readonly vehicleRepository: Repository,
+  constructor (private readonly vehicleRepository: VehicleRepositoryInterface,
     private readonly ticketRepository: Repository) {}
 
   async execute ({ name, driver, model, licensePlate, type }: VehicleDTO): Promise<Ticket | null> {
