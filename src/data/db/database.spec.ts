@@ -1,17 +1,5 @@
 import DatabaseJson from './database'
 
-// interface Vehicle {
-//   id?: string
-//   driver: string
-//   name: string
-//   model: string
-//   licensePlate: string
-//   type: string
-//   start_date: string
-//   end_date: Date | null
-
-// }
-
 const item = {
   id: '1',
   name: 'any_name',

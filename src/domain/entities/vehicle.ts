@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import dayjs from 'dayjs'
 export default class Vehicle {
   id?: string
   driver: string
@@ -19,7 +20,7 @@ export default class Vehicle {
       this.id = uuidv4()
     }
 
-    this.start_date = 'now'
+    this.start_date = dayjs().format('ddd, MMM D, YYYY h:mm A')
     this.end_date = null
     this.driver = driver
     this.name = name

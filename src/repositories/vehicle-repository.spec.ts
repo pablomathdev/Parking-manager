@@ -1,22 +1,21 @@
 import Vehicle from '../domain/entities/vehicle'
 import Database from '../domain/interfaces/database-interface'
 import VehicleRepository from './vehicle-repository'
+
 import 'uuid'
 
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
+// MockDate.set('2022-12-08')
 class DatabaseStub implements Database {
   async save (element: any): Promise<any> {
-    return new Promise(resolve => resolve({
-      id: 'testId',
-      driver: 'any_driver',
-      name: 'any_name',
-      model: 'any_model',
-      licensePlate: 'XXXXX',
-      type: 'any_type',
-      start_date: 'now',
-      end_date: null
-    }))
+    return new Promise(resolve => resolve(new Vehicle(
+      'any_driver',
+      'any_name',
+      'any_model',
+      'XXXXX',
+      'any_type'
+    )))
   }
 }
 
