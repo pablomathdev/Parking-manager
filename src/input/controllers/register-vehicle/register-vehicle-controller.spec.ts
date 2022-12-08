@@ -36,9 +36,7 @@ const fakeVehicle = {
   driver: 'any_driver',
   model: 'any_model',
   licensePlate: 'XXXXX',
-  type: 'any_type',
-  end_date: null,
-  start_date: 'now'
+  type: 'any_type'
 }
 
 describe('register vehicle controller', () => {
