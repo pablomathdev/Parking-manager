@@ -10,7 +10,17 @@ jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 class VehicleRepositoryStub implements VehicleRepositoryInterface {
   async update (id: string, updates: any): Promise<any> {
-    throw new Error('Method not implemented.')
+    const item = {
+      id,
+      driver: 'any_driver',
+      name: 'any_name',
+      model: 'any_model',
+      licensePlate: 'XXXXX',
+      type: 'any_type',
+      created_at: 'now'
+    }
+    const itemUpdated = { ...item, ...updates }
+    return new Promise(resolve => resolve(itemUpdated))
   }
 
   async create (element: any): Promise<any> {
@@ -34,6 +44,7 @@ class RegisterVehicleUseCase implements UseCase {
     const addVehicle = await this.vehicleRepository.create(vehicle)
     if (addVehicle) {
       const ticket = new Ticket(addVehicle.id, addVehicle.type, addVehicle.licensePlate)
+      await this.vehicleRepository.update(addVehicle.id, { id_ticket: ticket.id })
       await this.ticketRepository.create(ticket)
       return ticket
     }
@@ -82,5 +93,26 @@ describe('Register Vehicle Use Case', () => {
     await sut.execute(vehicle)
     expect(createSpy)
       .toHaveBeenCalledWith(new Ticket('testId', 'any_type', 'XXXXX'))
+  })
+  test('should calls vehicle repository(update) with correct values', async () => {
+    const { sut, vehicleRepositoryStub } = systemUnderTest()
+    const createSpy = jest.spyOn(vehicleRepositoryStub, 'update')
+
+    const vehicle: VehicleDTO = {
+      name: 'any_name',
+      driver: 'any_driver',
+      model: 'any_model',
+      licensePlate: 'XXXXX',
+      type: 'any_type'
+    }
+    const vehicleObj = new Vehicle(
+      vehicle.driver,
+      vehicle.name,
+      vehicle.model,
+      vehicle.licensePlate,
+      vehicle.type)
+
+    await sut.execute(vehicle)
+    expect(createSpy).toHaveBeenCalledWith(vehicleObj.id, { id_ticket: 'testId' })
   })
 })
