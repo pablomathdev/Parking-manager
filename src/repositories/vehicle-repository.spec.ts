@@ -3,12 +3,21 @@ import Database from '../domain/interfaces/database-interface'
 import VehicleRepository from './vehicle-repository'
 
 import 'uuid'
-
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 class DatabaseStub implements Database {
   async update (id: string, updates: any): Promise<any> {
-    throw new Error('Method not implemented.')
+    const item = {
+      id,
+      driver: 'any_driver',
+      name: 'any_name',
+      model: 'any_model',
+      licensePlate: 'XXXXX',
+      type: 'any_type',
+      created_at: 'now'
+    }
+    const itemUpdated = { ...item, ...updates }
+    return new Promise(resolve => resolve(itemUpdated))
   }
 
   async save (element: any): Promise<any> {
@@ -57,5 +66,38 @@ describe('Vehicle repository', () => {
 
     const result = await sut.create(fakeVehicle)
     expect(result).toEqual(fakeVehicle)
+  })
+  test('should calls database with correct values', async () => {
+    const { sut, databaseStub } = systemUnderTest()
+    const saveSpy = jest.spyOn(databaseStub, 'update')
+
+    const fakeVehicle = new Vehicle(
+      'any_driver',
+      'any_name',
+      'any_model',
+      'XXXXX',
+      'any_type'
+    )
+
+    const result = await sut.create(fakeVehicle)
+    await sut.update(result.id, { name: 'pablo' })
+    expect(saveSpy).toHaveBeenCalledWith(result.id, { name: 'pablo' })
+  })
+  test('should update item by id', async () => {
+    const { sut } = systemUnderTest()
+
+    const fakeVehicle = new Vehicle(
+      'any_driver',
+      'any_name',
+      'any_model',
+      'XXXXX',
+      'any_type'
+    )
+
+    const item = await sut.create(fakeVehicle)
+    const result = await sut.update(item.id, { name: 'pablo' })
+
+    expect(result.id).toBe(item.id)
+    expect(result.name).toBe('pablo')
   })
 })
