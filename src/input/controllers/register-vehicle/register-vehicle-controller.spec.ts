@@ -2,11 +2,10 @@ import Validation from '../../protocols/validation'
 import ClientRequest from '../../helpers/client-request'
 import RegisterVehicleController from './register-vehicle-controller'
 import UseCase from '../../protocols/use-case'
-import Vehicle from '../../../domain/entities/vehicle'
 import Ticket from '../../../domain/entities/ticket'
-
+import VehicleDTO from '../../dtos/vehicle-DTO'
 class RegisterVehicleUseCase implements UseCase {
-  async execute ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
+  async execute ({ name, driver, model, licensePlate, type }: VehicleDTO): Promise<Ticket> {
     const ticket: Ticket = {
       id: 'id_ticket',
       id_vehicle: 'id_any_vehicle',
@@ -32,7 +31,7 @@ const systemUnderTestFactory = (): any => {
   return { sut, validationStub, registerVehicleUseCaseStub }
 }
 
-const fakeVehicle: Vehicle = {
+const fakeVehicle = {
   name: 'any_name',
   driver: 'any_driver',
   model: 'any_model',
