@@ -1,7 +1,6 @@
-
 import Vehicle from '../domain/entities/vehicle'
 import Database from '../domain/interfaces/database-interface'
-import Repository from '../domain/interfaces/repository-interface'
+import VehicleRepository from './vehicle-repository'
 
 class DatabaseStub implements Database {
   async save (element: any): Promise<any> {
@@ -15,18 +14,6 @@ class DatabaseStub implements Database {
       start_date: 'now',
       end_date: null
     }))
-  }
-}
-
-class VehicleRepository implements Repository {
-  constructor (private readonly database: Database) { }
-
-  async create (vehicle: Vehicle): Promise<any> {
-    const saveVehicle = await this.database.save(vehicle)
-    if (saveVehicle) {
-      return saveVehicle
-    }
-    return null
   }
 }
 
