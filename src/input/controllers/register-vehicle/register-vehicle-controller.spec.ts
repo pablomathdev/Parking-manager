@@ -4,6 +4,7 @@ import RegisterVehicleController from './register-vehicle-controller'
 import UseCase from '../../protocols/use-case'
 import Vehicle from '../../../domain/entities/vehicle'
 import Ticket from '../../../domain/entities/ticket'
+
 class RegisterVehicleUseCase implements UseCase {
   async execute ({ name, driver, model, licensePlate, type, id }: Vehicle): Promise<Ticket> {
     const ticket: Ticket = {
