@@ -7,6 +7,10 @@ import 'uuid'
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 class DatabaseStub implements Database {
+  async update (id: string, updates: any): Promise<any> {
+    throw new Error('Method not implemented.')
+  }
+
   async save (element: any): Promise<any> {
     return new Promise(resolve => resolve(new Vehicle(
       'any_driver',
