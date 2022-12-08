@@ -8,12 +8,20 @@ import 'uuid'
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 class VehicleRepositoryStub implements Repository {
+  async update (id: string, updates: any): Promise<any> {
+    throw new Error('Method not implemented.')
+  }
+
   async create (element: any): Promise<any> {
     return element
   }
 }
 
 class TicketRepositoryStub implements Repository {
+  async update (id: string, updates: any): Promise<any> {
+    throw new Error('Method not implemented.')
+  }
+
   async create (element: any): Promise<any> {
     return element
   }
