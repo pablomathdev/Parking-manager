@@ -4,7 +4,8 @@
   "description": "- Gerenciador de estacionamento",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand",
+    "test":"jest --runInBand --coverage=false",
+    "test:coverage":"npm test -- --coverage",
     "prepare": "husky install"
   },
   "keywords": [],
