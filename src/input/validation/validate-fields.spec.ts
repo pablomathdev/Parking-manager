@@ -32,30 +32,17 @@ describe('Validate Fields', () => {
     const result = sut.validate(request)
     expect(result).toEqual(new Error('name not provided !'))
   })
-  test('should return an error if driver is not provided', () => {
+  test('should return an error if name is not provided', () => {
     const sut = new ValidateFields()
 
     const request = {
-      name: 'any_name',
+      driver: 'any_driver',
       model: 'any_model',
       licensePlate: 'XXXXX',
       type: 'any_type'
     }
 
     const result = sut.validate(request)
-    expect(result).toEqual(new Error('driver not provided !'))
-  })
-  test('should return an error if model is not provided', () => {
-    const sut = new ValidateFields()
-
-    const request = {
-      name: 'any_name',
-      driver: 'any_driver',
-      licensePlate: 'XXXXX',
-      type: 'any_type'
-    }
-
-    const result = sut.validate(request)
-    expect(result).toEqual(new Error('model not provided !'))
+    expect(result).toEqual(new Error('name not provided !'))
   })
 })
