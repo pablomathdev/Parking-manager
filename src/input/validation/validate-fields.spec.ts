@@ -45,4 +45,17 @@ describe('Validate Fields', () => {
     const result = sut.validate(request)
     expect(result).toEqual(new Error('driver not provided !'))
   })
+  test('should return an error if model is not provided', () => {
+    const sut = new ValidateFields()
+
+    const request = {
+      name: 'any_name',
+      driver: 'any_driver',
+      licensePlate: 'XXXXX',
+      type: 'any_type'
+    }
+
+    const result = sut.validate(request)
+    expect(result).toEqual(new Error('model not provided !'))
+  })
 })
