@@ -22,14 +22,34 @@ export default class DatabaseJson implements Database {
 
   async save (element: any): Promise<any> {
     const allData = await this.getFile()
-    const item = allData.find((item: { id: string }) => item.id === element.id)
-    if (item) {
+    const itemAlreadyExists = await this.findById(element.id)
+    if (itemAlreadyExists) {
       return new Error('item already exists !')
     }
-    if (!item) {
+    if (!itemAlreadyExists) {
       await this.writeFile([...allData, element])
       return element
     }
+  }
+
+  async findById (id: string): Promise<any> {
+    const allData = await this.getFile()
+    const item = allData.find((item: { id: string }) => item.id === id)
+    return item
+  }
+
+  async update (id: string, updates: any): Promise<any> {
+    const allData = await this.getFile()
+    // const index = allData.findIndex((item: { id: string }) => item.id === id)
+    // if (index === -1) {
+    //   return new Error('item does not exist !')
+    // }
+    // const item = allData[index]
+    // item.splice(index, 1)
+    const updateDates = allData.map(
+      (item: { id: string }) => item.id === id ? { ...item, ...updates } : new Error('item does not exists !'))
+    await this.writeFile(updateDates)
+    return await this.findById(id)
   }
 
   async clear (): Promise<void> {
