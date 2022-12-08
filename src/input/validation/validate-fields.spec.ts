@@ -11,7 +11,7 @@ class ValidateFields implements Validation {
 
     for (const field of requiredFields) {
       if (!input[field]) {
-        return new Error(`${field} not provided !`)
+        return new Error('fill in all fields !')
       }
     }
     return null
@@ -30,19 +30,14 @@ describe('Validate Fields', () => {
     }
 
     const result = sut.validate(request)
-    expect(result).toEqual(new Error('name not provided !'))
+    expect(result).toEqual(new Error('fill in all fields !'))
   })
   test('should return an error if name is not provided', () => {
     const sut = new ValidateFields()
 
-    const request = {
-      driver: 'any_driver',
-      model: 'any_model',
-      licensePlate: 'XXXXX',
-      type: 'any_type'
-    }
+    const request = {}
 
     const result = sut.validate(request)
-    expect(result).toEqual(new Error('name not provided !'))
+    expect(result).toEqual(new Error('fill in all fields !'))
   })
 })
