@@ -1,4 +1,4 @@
-import DatabaseJson from './database'
+import DatabaseJson from './database-json'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
@@ -10,7 +10,7 @@ const item = {
   created_at: dayjs().format('ddd, MMM D, YYYY h:mm A')
 }
 
-describe('Database', () => {
+describe('DatabaseJson', () => {
   afterEach(async () => {
     await new DatabaseJson('test').clear()
   })
