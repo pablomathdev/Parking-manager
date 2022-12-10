@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import ClientRequest from '../input/helpers/client-request'
 import Controller from '../input/protocols/controller'
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class ExpressRouteAdapter {
   static execute (controller: Controller) {
     return async (req: Request, res: Response) => {

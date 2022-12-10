@@ -3,7 +3,6 @@ import { registerVehicleControllerFactory } from '../../input/factories/factorie
 import ExpressRouterAdapter from '../express-route-adapter'
 let startRoute = Router()
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 startRoute.post('/start', ExpressRouterAdapter.execute(registerVehicleControllerFactory()))
 
 export { startRoute }
