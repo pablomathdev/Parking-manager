@@ -40,9 +40,13 @@ export default class DatabaseJson implements Database {
 
   async update (id: string, updates: any): Promise<any> {
     const allData = await this.getFile()
+
     const updateDates = allData.map(
       (item: { id: string }) => item.id === id ? { ...item, ...updates } : new Error('item does not exists !'))
-    await this.writeFile(updateDates)
+    const index = allData.findIndex((item: { id: string }) => item.id === id)
+    allData.splice(index, 1)
+
+    await this.writeFile([...allData, ...updateDates].filter(el => Object.keys(el).length))
     return await this.findById(id)
   }
 
