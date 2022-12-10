@@ -1,7 +1,10 @@
 import DatabaseJson from './database-json'
+import path from 'path'
+import fs from 'fs/promises'
 import { v4 as uuidv4 } from 'uuid'
 
 import dayjs from 'dayjs'
+
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 const item = {
@@ -12,9 +15,19 @@ const item = {
 }
 
 describe('DatabaseJson', () => {
+  beforeAll(async () => {
+    await fs.writeFile(
+      path.join(__dirname + '/collections/' + 'test.json'),
+      JSON.stringify([]))
+  })
+  afterAll(async () => {
+    await fs.unlink(
+      path.join(__dirname + '/collections/' + 'test.json'))
+  })
   afterEach(async () => {
     await new DatabaseJson('test').clear()
   })
+
   test('should save item in json', async () => {
     const sut = new DatabaseJson('test')
 
