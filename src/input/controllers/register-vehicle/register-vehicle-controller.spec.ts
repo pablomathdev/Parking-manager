@@ -11,7 +11,8 @@ class RegisterVehicleUseCase implements UseCase {
       id_vehicle: 'id_any_vehicle',
       type: 'any_type',
       licensePlate: 'XXXXX',
-      created_at: 'now'
+      created_at: 'now',
+      ticket: '0123456789'
     }
 
     return new Promise(resolve => resolve(ticket))
@@ -89,6 +90,7 @@ describe('register vehicle controller', () => {
       id_vehicle: 'id_any_vehicle',
       type: 'any_type',
       licensePlate: 'XXXXX',
+      ticket: '0123456789',
       created_at: 'now'
     }
     )

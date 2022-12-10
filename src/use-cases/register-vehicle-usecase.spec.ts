@@ -5,7 +5,8 @@ import Vehicle from '../domain/entities/vehicle'
 import Repository from '../domain/interfaces/repository-interface'
 import VehicleRepositoryInterface from '../domain/interfaces/vehicle-repository-interface'
 import 'uuid'
-
+import 'custom-uuid'
+jest.mock('custom-uuid', () => ({ generateCustomUuid: () => '0123456789' }))
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 jest
@@ -128,7 +129,8 @@ describe('Register Vehicle Use Case', () => {
         id: 'testId',
         id_vehicle: 'testId',
         licensePlate: 'XXXXX',
-        type: 'any_type'
+        type: 'any_type',
+        ticket: '0123456789'
       })
   })
 })
