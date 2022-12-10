@@ -1,4 +1,4 @@
-import UseCase from '../input/protocols/use-case'
+import RegisterVehicleUseCase from './register-vehicle-usecase'
 import Ticket from '../domain/entities/ticket'
 import VehicleDTO from '../input/dtos/vehicle-DTO'
 import Vehicle from '../domain/entities/vehicle'
@@ -26,24 +26,6 @@ class VehicleRepositoryStub implements VehicleRepositoryInterface {
 class TicketRepositoryStub implements Repository {
   async create (element: any): Promise<any> {
     return element
-  }
-}
-
-class RegisterVehicleUseCase implements UseCase {
-  constructor (private readonly vehicleRepository: VehicleRepositoryInterface,
-    private readonly ticketRepository: Repository) {}
-
-  async execute ({ name, driver, model, licensePlate, type }: VehicleDTO): Promise<Ticket | null> {
-    const vehicle = new Vehicle(driver, name, model, licensePlate, type)
-
-    const addVehicle = await this.vehicleRepository.create(vehicle)
-    if (addVehicle) {
-      const ticket = new Ticket(addVehicle.id, addVehicle.type, addVehicle.licensePlate)
-      await this.vehicleRepository.update(addVehicle.id, { ticket: { id: ticket.id, ticket: ticket.ticket } })
-      await this.ticketRepository.create(ticket)
-      return ticket
-    }
-    return null
   }
 }
 
