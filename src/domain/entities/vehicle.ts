@@ -10,7 +10,7 @@ export default class Vehicle {
   type: string
   start_date: string
   end_date: string | null
-  id_ticket?: string | null
+  ticket?: object | null
 
   constructor (
     driver: string,
@@ -25,7 +25,7 @@ export default class Vehicle {
 
     this.start_date = dayjs().format('ddd, MMM D, YYYY h:mm A')
     this.end_date = null
-    this.id_ticket = null
+    this.ticket = null
     this.driver = driver
     this.name = name
     this.model = model

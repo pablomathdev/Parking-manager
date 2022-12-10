@@ -39,7 +39,7 @@ class RegisterVehicleUseCase implements UseCase {
     const addVehicle = await this.vehicleRepository.create(vehicle)
     if (addVehicle) {
       const ticket = new Ticket(addVehicle.id, addVehicle.type, addVehicle.licensePlate)
-      await this.vehicleRepository.update(addVehicle.id, { id_ticket: ticket.id })
+      await this.vehicleRepository.update(addVehicle.id, { ticket: { id: ticket.id, ticket: ticket.ticket } })
       await this.ticketRepository.create(ticket)
       return ticket
     }
@@ -108,7 +108,7 @@ describe('Register Vehicle Use Case', () => {
       vehicle.type)
 
     await sut.execute(vehicle)
-    expect(createSpy).toHaveBeenCalledWith(vehicleObj.id, { id_ticket: 'testId' })
+    expect(createSpy).toHaveBeenCalledWith(vehicleObj.id, { ticket: { id: 'testId', ticket: '0123456789' } })
   })
   test('should returns a ticket if created vehicle successfully', async () => {
     const { sut } = systemUnderTest()
