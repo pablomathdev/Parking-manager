@@ -14,7 +14,7 @@ export default class RegisterVehicleController implements Controller {
       if (error) {
         return {
           status: 400,
-          response: error
+          response: error.message
         }
       }
 
@@ -27,10 +27,10 @@ export default class RegisterVehicleController implements Controller {
           response: ticket
         }
       }
-    } catch (err) {
+    } catch {
       return {
         status: 500,
-        response: err
+        response: 'Internal Error'
       }
     }
   }
