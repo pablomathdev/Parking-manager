@@ -55,7 +55,7 @@ describe('register vehicle controller', () => {
   test('should returns error if validation returns a error of validation', async () => {
     const { sut, validationStub } = systemUnderTestFactory()
     jest.spyOn(validationStub, 'validate')
-      .mockReturnValueOnce(new Error())
+      .mockReturnValueOnce(new Error('fill in all fields !'))
 
     const clientRequest: ClientRequest = {
       request: fakeVehicle
@@ -63,7 +63,7 @@ describe('register vehicle controller', () => {
 
     const response = await sut.handle(clientRequest)
     expect(response.status).toBe(400)
-    expect(response.response).toEqual(new Error())
+    expect(response.response).toEqual('fill in all fields !')
   })
   test('should call vehicle usecase with correct values', async () => {
     const { sut, registerVehicleUseCaseStub } = systemUnderTestFactory()
@@ -105,6 +105,6 @@ describe('register vehicle controller', () => {
 
     const response = await sut.handle(clientRequest)
     expect(response.status).toBe(500)
-    expect(response.response).toEqual(new Error('Error: could not create ticket!'))
+    expect(response.response).toEqual('Internal Error')
   })
 })

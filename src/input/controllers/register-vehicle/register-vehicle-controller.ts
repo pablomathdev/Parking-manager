@@ -20,7 +20,7 @@ export default class RegisterVehicleController implements Controller {
 
       const ticket = await this.registerVehicleUseCase.execute(clientRequest.request)
       if (!ticket) {
-        throw new Error('Error: could not create ticket!')
+        throw new Error()
       } else {
         return {
           status: 201,
