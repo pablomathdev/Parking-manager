@@ -10,6 +10,6 @@ app.use(bodyParser.json())
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname + '/' + '../views'))
-
+app.use('/tmp', express.static(path.join(__dirname, '../tmp')))
 app.use(startRoute)
 export default app
