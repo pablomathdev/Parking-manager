@@ -19,6 +19,7 @@ export default class ExpressRouteAdapter {
 
       const serverResponse = await controller.handle(clientRequest)
       const { ticket, licensePlate, created_at, type } = serverResponse.response
+
       if (serverResponse.status === 201) {
         await new GenerateView().generate(source, content(ticket, licensePlate, created_at, type))
         await new GenerateBarCode().generate(ticket)

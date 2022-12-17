@@ -18,9 +18,9 @@ export function content (
   return {
     'ticket': `${ticket}`,
     'licensePlate': `${licensePlate}`,
-    'hour': `${created_at}`,
+    'created_at': `${created_at}`,
     'type': `${type}`,
-    'img': `../tmp/codebar${ticket}.png`
+    'img': `../codebar/codebar${ticket}.png`
   }
 }
 
