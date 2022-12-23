@@ -1,4 +1,7 @@
 /* eslint-disable quote-props */
+
+import { GenerateBarCode } from '../generate-barcode'
+
 export const source =
 '<style>' +
 '*{margin: 0;padding: 0;}' +
@@ -10,26 +13,27 @@ export const source =
 
 '<p><strong>licensePlate:{{licensePlate}}</strong></p>' +
 
-'<p><img src="{{img}}"></p>' +
+'<p><img src={{img}}></p>' +
 
 '<p><strong>type:{{type}}</strong></p>' +
 
 '<p><strong>Hour:{{created_at}}</strong></p></div>'
 
-export function content (
+export async function content (
   ticket: string,
   licensePlate: string,
   created_at: string,
-  type: string): object {
+  type: string): Promise<any> {
   return {
     'ticket': `${ticket}`,
     'licensePlate': `${licensePlate}`,
     'created_at': `${created_at}`,
     'type': `${type}`,
-    'img': `../codebar/codebar${ticket}.png`
+    'img': await GenerateBarCode.generate(ticket)
+
   }
 }
-
+// 'img': `../codebar/codebar${ticket}.png`
 // const data = {
 //   ticket: `${ticket}`,
 //   licensePlate: `${licensePlate}`,

@@ -1,13 +1,13 @@
 import { createCanvas } from 'canvas'
 import JsBarcode from 'jsbarcode'
-import fs from 'fs/promises'
-import path from 'path'
 
 export class GenerateBarCode {
-  async generate (value: string): Promise<void> {
+  static async generate (value: string): Promise<string> {
     const canvas = createCanvas(100, 100)
     JsBarcode(canvas, value, { displayValue: false })
-    const buffer = canvas.toBuffer('image/png')
-    await fs.writeFile(path.join(__dirname + '/codebar/' + `codebar${value}` + '.png'), buffer)
+    // const buffer = canvas.toBuffer('image/png')
+    let pngUrl = canvas.toDataURL()
+    return pngUrl
+    // await fs.writeFile(path.join(__dirname + '/codebar/' + `codebar${value}` + '.png'), buffer)
   }
 }

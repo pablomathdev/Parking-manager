@@ -5,7 +5,7 @@
 /* eslint-disable quote-props */
 import { source, content } from './generate-ticket/helpers/template'
 import { GenerateView } from './generate-ticket/generate-view'
-import { GenerateBarCode } from './generate-ticket/generate-barcode'
+import { MailtrapProvider } from '../mail/mailtrap-provider'
 import { Request, Response } from 'express'
 import ClientRequest from '../input/helpers/client-request'
 import Controller from '../input/protocols/controller'
@@ -21,8 +21,9 @@ export default class ExpressRouteAdapter {
       const { ticket, licensePlate, created_at, type } = serverResponse.response
 
       if (serverResponse.status === 201) {
-        await new GenerateView().generate(source, content(ticket, licensePlate, created_at, type))
-        await new GenerateBarCode().generate(ticket)
+        await new GenerateView().generate(source, await content(ticket, licensePlate, created_at, type))
+
+        await new MailtrapProvider().sendEmail('pablomatheus171@gmail.com', ticket)
         return res.status(serverResponse.status).json(serverResponse.response)
       }
       res.status(serverResponse.status).json(serverResponse.response)
