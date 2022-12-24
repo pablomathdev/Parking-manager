@@ -30,4 +30,10 @@ describe('start parking', () => {
       type: 'any_type'
     }).expect(400)
   })
+  test('should returns 400 if any field no is provided', async () => {
+    await request(app).post('/start').send({
+      email: 'anyemail@gmail.com',
+      type: 'any_type'
+    }).expect(400)
+  })
 })
