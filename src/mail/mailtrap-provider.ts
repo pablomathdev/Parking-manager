@@ -18,7 +18,7 @@ export class MailtrapProvider {
 
       from: 'parking manager <parking_manager@example.com>',
       to,
-      subject: 'Parking Ticket', // Subject line
+      subject: 'Parking Ticket',
       html
     })
     console.log('Message sent: %s', message.messageId)

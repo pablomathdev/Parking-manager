@@ -13,6 +13,7 @@ module.exports = {
     '@typescript-eslint/prefer-readonly': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
-    '@typescript-eslint/no-extraneous-class': 'off'
+    '@typescript-eslint/no-extraneous-class': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off'
   }
 }
