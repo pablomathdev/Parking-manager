@@ -25,7 +25,7 @@ class DatabaseStub implements Database {
   }
 
   async save (element: any): Promise<any> {
-    return new Promise(resolve => resolve(new Ticket('any_id', 'any_type', 'XXXXX')))
+    return new Promise(resolve => resolve(new Ticket('id_vehicle', 'any_type', 'XXXXX')))
   }
 }
 
@@ -44,5 +44,13 @@ describe('Ticket Repository', () => {
 
     await sut.create(ticket)
     expect(saveSpy).toHaveBeenCalledWith(ticket)
+  })
+  test('should returns ticket if the database successfully saves the ticket', async () => {
+    const { sut } = systemUnderTest()
+
+    const ticket = new Ticket('id_vehicle', 'any_type', 'XXXXX')
+
+    const result = await sut.create(ticket)
+    expect(result).toEqual(ticket)
   })
 })
