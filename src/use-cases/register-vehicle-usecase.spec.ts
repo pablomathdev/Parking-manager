@@ -42,27 +42,21 @@ describe('Register Vehicle Use Case', () => {
     const createSpy = jest.spyOn(vehicleRepositoryStub, 'create')
 
     const vehicle: VehicleDTO = {
-      name: 'any_name',
-      driver: 'any_driver',
-      model: 'any_model',
+      email: 'any_email@email.com',
       licensePlate: 'XXXXX',
       type: 'any_type'
     }
 
     await sut.execute(vehicle)
     expect(createSpy).toHaveBeenCalledWith(
-      new Vehicle(
-        'any_driver',
-        'any_name', 'any_model', 'XXXXX', 'any_type'))
+      new Vehicle('any_email@email.com', 'XXXXX', 'any_type'))
   })
   test('should calls ticket repository with correct values', async () => {
     const { sut, ticketRepositoryStub } = systemUnderTest()
     const createSpy = jest.spyOn(ticketRepositoryStub, 'create')
 
     const vehicle: VehicleDTO = {
-      name: 'any_name',
-      driver: 'any_driver',
-      model: 'any_model',
+      email: 'any_email@email.com',
       licensePlate: 'XXXXX',
       type: 'any_type'
     }
@@ -76,16 +70,12 @@ describe('Register Vehicle Use Case', () => {
     const createSpy = jest.spyOn(vehicleRepositoryStub, 'update')
 
     const vehicle: VehicleDTO = {
-      name: 'any_name',
-      driver: 'any_driver',
-      model: 'any_model',
+      email: 'any_email@email.com',
       licensePlate: 'XXXXX',
       type: 'any_type'
     }
     const vehicleObj = new Vehicle(
-      vehicle.driver,
-      vehicle.name,
-      vehicle.model,
+      vehicle.email,
       vehicle.licensePlate,
       vehicle.type)
 
@@ -96,9 +86,7 @@ describe('Register Vehicle Use Case', () => {
     const { sut } = systemUnderTest()
 
     const vehicle: VehicleDTO = {
-      name: 'any_name',
-      driver: 'any_driver',
-      model: 'any_model',
+      email: 'any_email@email.com',
       licensePlate: 'XXXXX',
       type: 'any_type'
     }

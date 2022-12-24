@@ -22,9 +22,7 @@ class DatabaseStub implements Database {
 
   async save (element: any): Promise<any> {
     return new Promise(resolve => resolve(new Vehicle(
-      'any_driver',
-      'any_name',
-      'any_model',
+      'any_email@email.com',
       'XXXXX',
       'any_type'
     )))
@@ -43,9 +41,7 @@ describe('Vehicle repository', () => {
     const saveSpy = jest.spyOn(databaseStub, 'save')
 
     const fakeVehicle = new Vehicle(
-      'any_driver',
-      'any_name',
-      'any_model',
+      'any_email@email.com',
       'XXXXX',
       'any_type'
     )
@@ -57,9 +53,7 @@ describe('Vehicle repository', () => {
     const { sut } = systemUnderTest()
 
     const fakeVehicle = new Vehicle(
-      'any_driver',
-      'any_name',
-      'any_model',
+      'any_email@email.com',
       'XXXXX',
       'any_type'
     )
@@ -72,9 +66,7 @@ describe('Vehicle repository', () => {
     const saveSpy = jest.spyOn(databaseStub, 'update')
 
     const fakeVehicle = new Vehicle(
-      'any_driver',
-      'any_name',
-      'any_model',
+      'any_email@email.com',
       'XXXXX',
       'any_type'
     )
@@ -87,9 +79,7 @@ describe('Vehicle repository', () => {
     const { sut } = systemUnderTest()
 
     const fakeVehicle = new Vehicle(
-      'any_driver',
-      'any_name',
-      'any_model',
+      'any_email@email.com',
       'XXXXX',
       'any_type'
     )

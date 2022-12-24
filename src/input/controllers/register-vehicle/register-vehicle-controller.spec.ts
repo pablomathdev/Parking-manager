@@ -5,7 +5,7 @@ import UseCase from '../../protocols/use-case'
 import Ticket from '../../../domain/entities/ticket'
 import VehicleDTO from '../../dtos/vehicle-DTO'
 class RegisterVehicleUseCase implements UseCase {
-  async execute ({ name, driver, model, licensePlate, type }: VehicleDTO): Promise<Ticket> {
+  async execute ({ email, licensePlate, type }: VehicleDTO): Promise<Ticket> {
     const ticket: Ticket = {
       id: 'id_ticket',
       id_vehicle: 'id_any_vehicle',
@@ -34,7 +34,6 @@ const systemUnderTestFactory = (): any => {
 
 const fakeVehicle = {
   email: 'any_email@email.com',
-  model: 'any_model',
   licensePlate: 'XXXXX',
   type: 'any_type'
 }

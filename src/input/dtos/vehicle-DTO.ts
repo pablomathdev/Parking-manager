@@ -1,7 +1,5 @@
 export default interface VehicleDTO {
-  name: string
-  driver: string
-  model: string
+  email: string
   licensePlate: string
   type: string
 }

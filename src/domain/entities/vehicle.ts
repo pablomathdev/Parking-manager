@@ -3,9 +3,7 @@ import dayjs from 'dayjs'
 
 export default class Vehicle {
   id?: string
-  driver: string
-  name: string
-  model: string
+  email: string
   licensePlate: string
   type: string
   start_date: string
@@ -13,9 +11,7 @@ export default class Vehicle {
   ticket?: object | null
 
   constructor (
-    driver: string,
-    name: string,
-    model: string,
+    email: string,
     licensePlate: string,
     type: string
   ) {
@@ -26,9 +22,7 @@ export default class Vehicle {
     this.start_date = dayjs().format('ddd, MMM D, YYYY h:mm A')
     this.end_date = null
     this.ticket = null
-    this.driver = driver
-    this.name = name
-    this.model = model
+    this.email = email
     this.licensePlate = licensePlate
     this.type = type
   }

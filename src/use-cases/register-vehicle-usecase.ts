@@ -9,8 +9,8 @@ export default class RegisterVehicleUseCase implements UseCase {
   constructor (private readonly vehicleRepository: VehicleRepositoryInterface,
     private readonly ticketRepository: Repository) {}
 
-  async execute ({ name, driver, model, licensePlate, type }: VehicleDTO): Promise<Ticket | null> {
-    const vehicle = new Vehicle(driver, name, model, licensePlate, type)
+  async execute ({ email, licensePlate, type }: VehicleDTO): Promise<Ticket | null> {
+    const vehicle = new Vehicle(email, licensePlate, type)
 
     const addVehicle = await this.vehicleRepository.create(vehicle)
     if (addVehicle) {
