@@ -1,6 +1,6 @@
-import Ticket from '../domain/entities/ticket'
-import Database from '../domain/interfaces/database-interface'
-import Repository from '../domain/interfaces/repository-interface'
+import Ticket from '../../domain/entities/ticket'
+import Database from '../../domain/interfaces/database-interface'
+import Repository from '../../domain/interfaces/repository-interface'
 
 export default class TicketRepository implements Repository {
   constructor (private readonly database: Database) { }

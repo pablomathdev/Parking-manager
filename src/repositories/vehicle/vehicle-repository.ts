@@ -1,6 +1,6 @@
-import Repository from '../domain/interfaces/repository-interface'
-import Database from '../domain/interfaces/database-interface'
-import Vehicle from '../domain/entities/vehicle'
+import Repository from '../../domain/interfaces/repository-interface'
+import Database from '../../domain/interfaces/database-interface'
+import Vehicle from '../../domain/entities/vehicle'
 
 export default class VehicleRepository implements Repository {
   constructor (private readonly database: Database) { }

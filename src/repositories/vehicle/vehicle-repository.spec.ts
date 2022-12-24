@@ -1,5 +1,5 @@
-import Vehicle from '../domain/entities/vehicle'
-import Database from '../domain/interfaces/database-interface'
+import Vehicle from '../../domain/entities/vehicle'
+import Database from '../../domain/interfaces/database-interface'
 import VehicleRepository from './vehicle-repository'
 
 import 'uuid'

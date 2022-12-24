@@ -1,5 +1,5 @@
-import Ticket from '../domain/entities/ticket'
-import Database from '../domain/interfaces/database-interface'
+import Ticket from '../../domain/entities/ticket'
+import Database from '../../domain/interfaces/database-interface'
 import TicketRepository from './ticket-repository'
 
 import 'uuid'
