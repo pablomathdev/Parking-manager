@@ -33,8 +33,7 @@ const systemUnderTestFactory = (): any => {
 }
 
 const fakeVehicle = {
-  name: 'any_name',
-  driver: 'any_driver',
+  email: 'any_email@email.com',
   model: 'any_model',
   licensePlate: 'XXXXX',
   type: 'any_type'
