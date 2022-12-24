@@ -3,9 +3,7 @@ import Validation from '../protocols/validation'
 export default class ValidateFields implements Validation {
   validate (input: any): Error | null {
     const requiredFields = [
-      'name',
-      'driver',
-      'model',
+      'email',
       'licensePlate',
       'type']
 
