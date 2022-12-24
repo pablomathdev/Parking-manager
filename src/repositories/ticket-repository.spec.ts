@@ -1,6 +1,6 @@
 import Ticket from '../domain/entities/ticket'
 import Database from '../domain/interfaces/database-interface'
-import Repository from '../domain/interfaces/repository-interface'
+import TicketRepository from './ticket-repository'
 
 import 'uuid'
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
@@ -8,16 +8,6 @@ jest.mock('custom-uuid', () => ({ generateCustomUuid: () => 'any_ticket_number' 
 jest
   .useFakeTimers()
   .setSystemTime(new Date('2020-01-01'))
-export default class TicketRepository implements Repository {
-  constructor (private readonly database: Database) { }
-  async create (ticket: Ticket): Promise<any> {
-    const saveticket = await this.database.save(ticket)
-    if (saveticket) {
-      return saveticket
-    }
-    return null
-  }
-}
 
 class DatabaseStub implements Database {
   async update (id: string, updates: any): Promise<any> {
