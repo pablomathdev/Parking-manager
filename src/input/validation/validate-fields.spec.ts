@@ -21,4 +21,16 @@ describe('Validate Fields', () => {
     const result = sut.validate(request)
     expect(result).toEqual(new Error('fill in all fields !'))
   })
+  test('should return an error if email is invalid', () => {
+    const sut = new ValidateFields()
+
+    const request = {
+      email: 'invalidemailgmail.com',
+      licensePlate: 'XXXXX',
+      type: 'any_type'
+    }
+
+    const result = sut.validate(request)
+    expect(result).toEqual(new Error('Invalid email !'))
+  })
 })
