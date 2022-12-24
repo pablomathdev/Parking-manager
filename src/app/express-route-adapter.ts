@@ -11,14 +11,14 @@ export default class ExpressRouteAdapter {
       const clientRequest: ClientRequest = {
         request: req.body
       }
-
+      const { email } = clientRequest.request
       const serverResponse = await controller.handle(clientRequest)
       const { ticket, licensePlate, created_at, type } = serverResponse.response
 
       if (serverResponse.status === 201) {
         await new GenerateView().generate(source, await content(ticket, licensePlate, created_at, type))
 
-        await new MailtrapProvider().sendEmail('pablomatheus171@gmail.com', ticket)
+        await new MailtrapProvider().sendEmail(email, ticket)
         return res.status(serverResponse.status).json(serverResponse.response)
       }
       res.status(serverResponse.status).json(serverResponse.response)
