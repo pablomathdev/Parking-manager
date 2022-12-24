@@ -23,4 +23,11 @@ describe('start parking', () => {
       type: 'any_type'
     }).expect(201)
   })
+  test('should returns 400 if email is invalid', async () => {
+    await request(app).post('/start').send({
+      email: 'anyemailgmail.com',
+      licensePlate: 'XXXXX',
+      type: 'any_type'
+    }).expect(400)
+  })
 })
