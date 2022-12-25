@@ -1,10 +1,8 @@
-import { source, content } from './generate-ticket/helpers/template'
-import { GenerateView } from './generate-ticket/generate-view'
-import { MailtrapProvider } from '../mail/mailtrap-provider'
+import { source } from './generate-ticket/helpers/template'
 import { Request, Response } from 'express'
 import ClientRequest from '../input/helpers/client-request'
 import Controller from '../input/protocols/controller'
-
+import { sendTicketFactory } from '../input/factories/factories'
 export default class ExpressRouteAdapter {
   static execute (controller: Controller) {
     return async (req: Request, res: Response) => {
@@ -16,9 +14,7 @@ export default class ExpressRouteAdapter {
       const { ticket, licensePlate, created_at, type } = serverResponse.response
 
       if (serverResponse.status === 201) {
-        await new GenerateView().generate(source, await content(ticket, licensePlate, created_at, type))
-
-        await new MailtrapProvider().sendEmail(email, ticket)
+        await sendTicketFactory().sendTicket({ source, ticket, licensePlate, created_at, type, email })
         return res.status(serverResponse.status).json(serverResponse.response)
       }
       res.status(serverResponse.status).json(serverResponse.response)
