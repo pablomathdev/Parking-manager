@@ -11,7 +11,8 @@ class RegisterVehicleUseCase implements UseCase {
       id_vehicle: 'id_any_vehicle',
       type: 'any_type',
       licensePlate: 'XXXXX',
-      created_at: 'now',
+      created_at: '00/00/0000',
+      hour: 'now',
       ticket: '0123456789'
     }
 
@@ -89,7 +90,8 @@ describe('register vehicle controller', () => {
       type: 'any_type',
       licensePlate: 'XXXXX',
       ticket: '0123456789',
-      created_at: 'now'
+      created_at: '00/00/0000',
+      hour: 'now'
     }
     )
   })

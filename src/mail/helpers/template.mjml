@@ -1,0 +1,44 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+    
+        <mj-all font-family="Arial" />
+      
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#fff">
+  
+    <!-- Header -->
+    <mj-section mj-class="header" background-color="#EE4">
+      <mj-column>
+
+        <mj-image width="80px" padding="0" src="https://cdn-icons-png.flaticon.com/512/9284/9284266.png"></mj-image>
+
+
+      </mj-column>
+    </mj-section>
+    <!-- intro -->
+    <mj-section>
+    <mj-column>
+    <mj-text font-size="30px">Hi, this is your parking ticket:</mj-text>
+    </mj-column>
+    </mj-section>
+    <!-- Ticket -->
+    <mj-section border-top="2px solid #aaaaaa" border-left="2px solid #aaaaaa" border-right="2px solid #aaaaaa" border-bottom="2px solid #aaaaaa" padding="12px">
+      <mj-column>
+        
+
+        <mj-text font-weight="bold" font-size="17px">15 minutes tolerance!</mj-text>
+        <mj-text font-size="15px">License Plate: {{licensePlate}}</mj-text>
+        <mj-text font-size="15px">Date: {{created_at}}</mj-text>
+        <mj-text font-size="15px">Hour: {{hour}}</mj-text>
+
+      
+      </mj-column>
+    </mj-section>
+    <mj-section text-align="center" >
+    <mj-column>
+       <mj-image src='{{barcode}}'></mj-image>
+    </mj-column>
+    </mj-section>
+</mjml>

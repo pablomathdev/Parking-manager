@@ -1,26 +1,35 @@
+import '../app/config/dotenv'
 import nodemailer from 'nodemailer'
-import fs from 'fs/promises'
-import path from 'path'
+import { nodemailerMjmlPlugin } from 'nodemailer-mjml'
+import { join } from 'path'
+import { generateBarcode } from './helpers/generate-barcode'
 
 export class MailtrapProvider {
-  async sendEmail (to: string, ticket: string): Promise<void> {
+  async sendEmail (to: string, ticket: string, licensePlate: string, created_at: string, hour: string): Promise<void> {
     const transport = nodemailer.createTransport({
       host: 'smtp.mailtrap.io',
       port: 2525,
       auth: {
-        user: '3651b1980b7ecb',
-        pass: 'ad660ece458474'
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASS
       }
     })
-    const html = await fs.readFile(path.join(__dirname, '../' + '/app/generate-ticket/view/' + `view${ticket}.html`), { encoding: 'utf-8' })
 
-    const message = await transport.sendMail({
+    transport.use('compile', nodemailerMjmlPlugin({ templateFolder: join(__dirname, './helpers/') }))
 
-      from: 'parking manager <parking_manager@example.com>',
+    const message = transport.sendMail({
+      from: 'Parking manager <noreplay@parking_manager.com>',
       to,
-      subject: 'Parking Ticket',
-      html
+      subject: 'Your parking ticket',
+      templateName: 'template',
+      templateData: {
+        ticket,
+        licensePlate,
+        created_at,
+        hour,
+        barcode: generateBarcode(ticket)
+      }
     })
-    console.log('Message sent: %s', message.messageId)
+    console.log('Message sent: %s', (await message).messageId)
   }
 }

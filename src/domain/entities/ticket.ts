@@ -8,7 +8,7 @@ export default class Ticket {
   licensePlate: string
   ticket: string
   created_at: string
-
+  hour: string
   constructor (id_vehicle: string, type: string, licensePlate: string) {
     this.id = uuidV4()
     this.id_vehicle = id_vehicle
@@ -16,6 +16,7 @@ export default class Ticket {
     this.type = type
     this.licensePlate = licensePlate
     this.ticket = generateCustomUuid('0123456789', 10)
-    this.created_at = dayjs().format('ddd, MMM D, YYYY h:mm A')
+    this.created_at = dayjs().format('MM/DD/YYYY')
+    this.hour = dayjs().format('h:mm:ss A')
   }
 }

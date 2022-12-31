@@ -95,7 +95,8 @@ describe('Register Vehicle Use Case', () => {
 
     expect(result).toEqual(
       {
-        created_at: 'Wed, Dec 7, 2022 8:00 PM',
+        created_at: '12/07/2022',
+        hour: '8:00:00 PM',
         id: 'testId',
         id_vehicle: 'testId',
         licensePlate: 'XXXXX',
