@@ -1,13 +1,12 @@
 {
-  "name": "new-project",
+  "name": "parking-manager",
   "version": "1.0.0",
-  "description": "- Gerenciador de estacionamento",
+  "description": "parking manager",
   "main": "index.js",
   "scripts": {
     "start:dev": "ts-node-dev --respawn --transpile-only src/app/config/server.ts",
     "test": "jest --runInBand --coverage=false --passWithNoTests",
-    "test:coverage": "npm test -- --coverage",
-    "prepare": "husky install"
+    "test:coverage": "npm test -- --coverage"
   },
   "keywords": [],
   "author": "",
