@@ -6,7 +6,8 @@
     "esModuleInterop": true,     
     "resolveJsonModule": true,           
     "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "outDir": "./dist"
   }
   
 }
