@@ -1,38 +1,42 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MailtrapProvider = void 0;
 require("../app/config/dotenv");
-const nodemailer_1 = __importDefault(require("nodemailer"));
-const nodemailer_mjml_1 = require("nodemailer-mjml");
-const path_1 = require("path");
-const generate_barcode_1 = require("./helpers/generate-barcode");
+var _nodemailer = _interopRequireDefault(require("nodemailer"));
+var _nodemailerMjml = require("nodemailer-mjml");
+var _path = require("path");
+var _generateBarcode = require("./helpers/generate-barcode");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class MailtrapProvider {
-    async sendEmail(to, ticket, licensePlate, created_at, hour) {
-        const transport = nodemailer_1.default.createTransport({
-            host: 'smtp.mailtrap.io',
-            port: 2525,
-            auth: {
-                user: process.env.MAILTRAP_USER,
-                pass: process.env.MAILTRAP_PASS
-            }
-        });
-        transport.use('compile', nodemailer_mjml_1.nodemailerMjmlPlugin({ templateFolder: path_1.join(__dirname, './helpers/') }));
-        const message = transport.sendMail({
-            from: 'Parking manager <noreplay@parking_manager.com>',
-            to,
-            subject: 'Your parking ticket',
-            templateName: 'template',
-            templateData: {
-                ticket,
-                licensePlate,
-                created_at,
-                hour,
-                barcode: generate_barcode_1.generateBarcode(ticket)
-            }
-        });
-        console.log('Message sent: %s', (await message).messageId);
-    }
+  async sendEmail(to, ticket, licensePlate, created_at, hour) {
+    const transport = _nodemailer.default.createTransport({
+      host: 'smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASS
+      }
+    });
+    transport.use('compile', (0, _nodemailerMjml.nodemailerMjmlPlugin)({
+      templateFolder: (0, _path.join)(__dirname, './helpers/')
+    }));
+    const message = transport.sendMail({
+      from: 'Parking manager <noreplay@parking_manager.com>',
+      to,
+      subject: 'Your parking ticket',
+      templateName: 'template',
+      templateData: {
+        ticket,
+        licensePlate,
+        created_at,
+        hour,
+        barcode: (0, _generateBarcode.generateBarcode)(ticket)
+      }
+    });
+    console.log('Message sent: %s', (await message).messageId);
+  }
 }
 exports.MailtrapProvider = MailtrapProvider;

@@ -1,4 +1,3 @@
-
 import request from 'supertest'
 import DatabaseJson from '../../data/db/database-json'
 import app from '../config/app'

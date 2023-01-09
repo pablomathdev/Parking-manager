@@ -1,11 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const factories_1 = require("../../input/factories/factories");
-const express_route_adapter_1 = __importDefault(require("../express-route-adapter"));
-let startRoute = express_1.Router();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.startRoute = void 0;
+var _express = require("express");
+var _factories = require("../../input/factories/factories");
+var _expressRouteAdapter = _interopRequireDefault(require("../express-route-adapter"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+let startRoute = (0, _express.Router)();
 exports.startRoute = startRoute;
-startRoute.post('/start', express_route_adapter_1.default.execute(factories_1.registerVehicleControllerFactory()));
+startRoute.post('/start', _expressRouteAdapter.default.execute((0, _factories.registerVehicleControllerFactory)()));
