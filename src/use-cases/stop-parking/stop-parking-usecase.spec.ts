@@ -27,7 +27,19 @@ const makeVehicleRepository = (): any => {
     }
 
     async update (id: string, updates: any): Promise<any> {
-      return null
+      const item = {
+        id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
+        start_date: 'Fri, Jan 13, 2023 10:36 AM',
+        end_date: null,
+        ticket: {
+          id: '385d0aba-e8d2-4500-b840-2ce08e02ac04',
+          ticket: '0123456789'
+        },
+        email: 'testemail@email.com',
+        licensePlate: 'XXXXX',
+        type: 'any-type'
+      }
+      return new Promise(resolve => resolve({ ...item, ...updates }))
     }
 
     async create (element: any): Promise<any> {
@@ -40,8 +52,8 @@ class StopParkingUseCase implements UseCase {
   constructor (private readonly vehicleRepository: VehicleRepositoryInterface) {}
   async execute (input: any): Promise<any> {
     const vehicle = await this.vehicleRepository.findByTicket(input)
-    await this.vehicleRepository.update(vehicle.id as string, { end_date: DateProvider.dateNow() })
-    DateProvider.compare(vehicle.end_date as string, vehicle.start_date)
+    const vehicleUpdated = await this.vehicleRepository.update(vehicle.id as string, { end_date: DateProvider.dateNow() })
+    DateProvider.compare(vehicleUpdated.end_date as string, vehicleUpdated.start_date)
 
     return null
   }
