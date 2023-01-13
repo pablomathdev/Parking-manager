@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import ClientRequest from '../input/helpers/client-request'
 import Controller from '../input/protocols/controller'
-import { MailtrapProvider } from '../mail/mailtrap-provider'
+import { EmailProvider } from '../mail/email-provider'
 
 export default class ExpressRouteAdapter {
   static execute (controller: Controller) {
@@ -14,7 +14,7 @@ export default class ExpressRouteAdapter {
       const { ticket, licensePlate, created_at, hour } = serverResponse.response
 
       if (serverResponse.status === 201) {
-        await new MailtrapProvider().sendEmail(email, ticket, licensePlate, created_at, hour)
+        await new EmailProvider().sendEmail(email, ticket, licensePlate, created_at, hour)
 
         return res.status(serverResponse.status).json(serverResponse.response)
       }

@@ -4,14 +4,16 @@ import { nodemailerMjmlPlugin } from 'nodemailer-mjml'
 import { join } from 'path'
 import { generateBarcode } from './helpers/generate-barcode'
 
-export class MailtrapProvider {
+export class EmailProvider {
   async sendEmail (to: string, ticket: string, licensePlate: string, created_at: string, hour: string): Promise<void> {
+    let testAccount = await nodemailer.createTestAccount()
     const transport = nodemailer.createTransport({
-      host: 'smtp.mailtrap.io',
-      port: 2525,
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
       auth: {
-        user: process.env.MAILTRAP_USER,
-        pass: process.env.MAILTRAP_PASS
+        user: testAccount.user,
+        pass: testAccount.pass
       }
     })
 
@@ -31,5 +33,6 @@ export class MailtrapProvider {
       }
     })
     console.log('Message sent: %s', (await message).messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(await message))
   }
 }
