@@ -2,12 +2,12 @@
   "name": "parking-manager",
   "version": "1.0.0",
   "description": "parking manager",
-  "main": "index.js",
   "scripts": {
     "build": "babel --extensions .ts  ./src -d ./dist --copy-files --no-copy-ignored",
     "start": "node ./dist/app/config/server.js ",
     "start:dev": "ts-node-dev --respawn --transpile-only src/app/config/server.ts",
-    "test": "jest --runInBand --coverage=false --passWithNoTests --detectOpenHandles",
+    "test": "jest --runInBand --silent --watch --coverage=false --passWithNoTests",
+    "test:staged":"jest --runInBand --silent --coverage=false --passWithNoTests",
     "test:coverage": "npm test -- --coverage"
   },
   "keywords": [],
