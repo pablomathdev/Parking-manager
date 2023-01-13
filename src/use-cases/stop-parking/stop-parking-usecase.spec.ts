@@ -14,7 +14,7 @@ const makeVehicleRepository = (): any => {
         resolve({
           id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
           start_date: 'Fri, Jan 13, 2023 10:36 AM',
-          end_date: null,
+          end_date: 'Fri, Jan 13, 2023 10:51 AM',
           ticket: {
             id: '385d0aba-e8d2-4500-b840-2ce08e02ac04',
             ticket: '0123456789'
@@ -27,20 +27,7 @@ const makeVehicleRepository = (): any => {
     }
 
     async update (id: string, updates: any): Promise<any> {
-      return new Promise((resolve) =>
-        resolve({
-          id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
-          start_date: 'Fri, Jan 13, 2023 10:36 AM',
-          end_date: 'Fri, Jan 13, 2023 10:51 AM',
-          ticket: {
-            id: '385d0aba-e8d2-4500-b840-2ce08e02ac04',
-            ticket: '0123456789'
-          },
-          email: 'testemail@email.com',
-          licensePlate: 'XXXXX',
-          type: 'any-type'
-        })
-      )
+      return null
     }
 
     async create (element: any): Promise<any> {
@@ -54,8 +41,7 @@ class StopParkingUseCase implements UseCase {
   async execute (input: any): Promise<any> {
     const vehicle = await this.vehicleRepository.findByTicket(input)
     await this.vehicleRepository.update(vehicle.id as string, { end_date: DateProvider.dateNow() })
-
-    // const { start_date } = vehicle
+    DateProvider.compare(vehicle.end_date as string, vehicle.start_date)
 
     return null
   }
@@ -79,7 +65,7 @@ describe('Stop Parking Use Case', () => {
 
     expect(findByTicketSpy).toHaveBeenCalledWith(ticket)
   })
-  test('calls DateProvider with correct values', async () => {
+  test('calls vehicle repository (update) with correct values', async () => {
     const { sut, vehicleRepositoryStub } = systemUnderTest()
     const updateSpy = jest.spyOn(vehicleRepositoryStub, 'update')
     const ticket = '0123456789'
@@ -87,5 +73,14 @@ describe('Stop Parking Use Case', () => {
     await sut.execute(ticket)
 
     expect(updateSpy).toHaveBeenCalledWith('6d9e1bae-460c-40a0-ad4e-1f4a8713919f', { end_date: 'Fri, Jan 13, 2023 10:51 AM' })
+  })
+  test('calls DateProvider with correct values', async () => {
+    const { sut } = systemUnderTest()
+    const compareSpy = jest.spyOn(DateProvider, 'compare')
+    const ticket = '0123456789'
+
+    await sut.execute(ticket)
+
+    expect(compareSpy).toHaveBeenCalledWith('Fri, Jan 13, 2023 10:51 AM', 'Fri, Jan 13, 2023 10:36 AM')
   })
 })
