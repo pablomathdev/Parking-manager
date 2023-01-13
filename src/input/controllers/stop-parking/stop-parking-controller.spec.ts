@@ -6,10 +6,10 @@ import UseCase from 'input/protocols/use-case'
 class StopParkingController implements Controller {
   constructor (private readonly stopParkingUseCase: UseCase) {}
   async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
-    await this.stopParkingUseCase.execute(clientRequest.request)
+    const vehicle = await this.stopParkingUseCase.execute(clientRequest.request)
     return {
       status: 200,
-      response: 'any'
+      response: vehicle
     }
   }
 }
@@ -17,7 +17,17 @@ class StopParkingController implements Controller {
 const makeStopParkingUseCaseStub = (): any => {
   class StopParkingUseCaseStub implements UseCase {
     async execute (input: any): Promise<any> {
-      return new Promise(resolve => resolve({}))
+      return new Promise(resolve => resolve({
+
+        id: 'fd4108f7-61fb-4b40-afd0-02318fb5a6ae',
+        id_vehicle: 'f41c53bc-b39c-4263-9330-7e11362fa16a',
+        type: 'any-type',
+        licensePlate: 'XXXXX',
+        ticket: '0123456789',
+        created_at: '01/12/2023',
+        hour: '8:22:05 PM'
+
+      }))
     }
   }
   return new StopParkingUseCaseStub()
@@ -39,5 +49,24 @@ describe('Stop parking controller', () => {
     }
     await sut.handle(clientRequest)
     expect(executeSpy).toHaveBeenCalledWith('0123456789')
+  })
+  test('returns vehicle if use case returns a vehicle', async () => {
+    const { sut } = systemUnderTest()
+    const clientRequest = {
+      request: '0123456789'
+    }
+    const serverResponse = await sut.handle(clientRequest)
+    expect(serverResponse.status).toBe(200)
+    expect(serverResponse.response).toEqual({
+
+      id: 'fd4108f7-61fb-4b40-afd0-02318fb5a6ae',
+      id_vehicle: 'f41c53bc-b39c-4263-9330-7e11362fa16a',
+      type: 'any-type',
+      licensePlate: 'XXXXX',
+      ticket: '0123456789',
+      created_at: '01/12/2023',
+      hour: '8:22:05 PM'
+
+    })
   })
 })
