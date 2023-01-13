@@ -1,6 +1,7 @@
 import VehicleRepositoryInterface from 'domain/interfaces/vehicle-repository-interface'
 import UseCase from 'input/protocols/use-case'
 import Vehicle from 'domain/entities/vehicle'
+import dayjs from 'dayjs'
 
 const makeVehicleRepository = (): any => {
   class VehicleRepositoryStub implements VehicleRepositoryInterface {
@@ -32,7 +33,13 @@ const makeVehicleRepository = (): any => {
 class StopParkingUseCase implements UseCase {
   constructor (private readonly vehicleRepository: VehicleRepositoryInterface) {}
   async execute (input: any): Promise<any> {
-    await this.vehicleRepository.findByTicket(input)
+    const vehicle = await this.vehicleRepository.findByTicket(input)
+
+    // const tolerance = dayjs.duration(15, 'm')
+
+    const { start_date } = vehicle
+    dayjs.isDayjs(start_date)
+    return null
   }
 }
 
@@ -53,5 +60,16 @@ describe('Stop Parking Use Case', () => {
     await sut.execute(ticket)
 
     expect(findByTicketSpy).toHaveBeenCalledWith(ticket)
+  })
+  test('calls dayjs with correct values', async () => {
+    const { sut } = systemUnderTest()
+
+    const dayjsSpy = jest.spyOn(dayjs, 'isDayjs')
+
+    const ticket = '0123456789'
+
+    await sut.execute(ticket)
+
+    expect(dayjsSpy).toHaveBeenCalledWith('Fri, Jan 13, 2023 10:36 AM')
   })
 })
