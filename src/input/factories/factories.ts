@@ -1,7 +1,7 @@
 import DatabaseJson from '../../data/db/database-json'
 import TicketRepository from '../../repositories/ticket/ticket-repository'
 import VehicleRepository from '../../repositories/vehicle/vehicle-repository'
-import RegisterVehicleUseCase from '../../use-cases/register-vehicle-usecase'
+import RegisterVehicleUseCase from '../../use-cases/register-vehicle/register-vehicle-usecase'
 import RegisterVehicleController from '../controllers/register-vehicle/register-vehicle-controller'
 import ValidateFields from '../validation/validate-fields'
 

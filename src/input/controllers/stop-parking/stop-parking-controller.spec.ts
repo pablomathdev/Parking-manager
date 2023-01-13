@@ -6,13 +6,16 @@ const makeStopParkingUseCaseStub = (): any => {
     async execute (input: any): Promise<any> {
       return new Promise((resolve) =>
         resolve({
-          id: 'fd4108f7-61fb-4b40-afd0-02318fb5a6ae',
-          id_vehicle: 'f41c53bc-b39c-4263-9330-7e11362fa16a',
-          type: 'any-type',
+          id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
+          start_date: 'Fri, Jan 13, 2023 10:36 AM',
+          end_date: null,
+          ticket: {
+            id: '385d0aba-e8d2-4500-b840-2ce08e02ac04',
+            ticket: '0123456789'
+          },
+          email: 'testemail@email.com',
           licensePlate: 'XXXXX',
-          ticket: '0123456789',
-          created_at: '01/12/2023',
-          hour: '8:22:05 PM'
+          type: 'any-type'
         })
       )
     }
@@ -45,13 +48,16 @@ describe('Stop parking controller', () => {
     const serverResponse = await sut.handle(clientRequest)
     expect(serverResponse.status).toBe(200)
     expect(serverResponse.response).toEqual({
-      id: 'fd4108f7-61fb-4b40-afd0-02318fb5a6ae',
-      id_vehicle: 'f41c53bc-b39c-4263-9330-7e11362fa16a',
-      type: 'any-type',
+      id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
+      start_date: 'Fri, Jan 13, 2023 10:36 AM',
+      end_date: null,
+      ticket: {
+        id: '385d0aba-e8d2-4500-b840-2ce08e02ac04',
+        ticket: '0123456789'
+      },
+      email: 'testemail@email.com',
       licensePlate: 'XXXXX',
-      ticket: '0123456789',
-      created_at: '01/12/2023',
-      hour: '8:22:05 PM'
+      type: 'any-type'
     })
   })
   test('returns 404 if use case not returns a vehicle', async () => {

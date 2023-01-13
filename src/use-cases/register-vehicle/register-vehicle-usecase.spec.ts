@@ -14,6 +14,10 @@ jest
   .setSystemTime(new Date('2022-12-08'))
 
 class VehicleRepositoryStub implements VehicleRepositoryInterface {
+  async findByTicket (ticket: string): Promise<Vehicle> {
+    throw new Error('Method not implemented.')
+  }
+
   async update (id: string, updates: any): Promise<any> {
     return null
   }
