@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import ClientRequest from '../input/helpers/client-request'
 import Controller from '../input/protocols/controller'
-import { EmailProvider } from '../mail/email-provider'
+import { EmailProvider } from '../providers/mail/email-provider'
 
 export default class ExpressRouteAdapter {
   static execute (controller: Controller) {

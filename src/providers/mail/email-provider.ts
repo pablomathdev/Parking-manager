@@ -1,4 +1,4 @@
-import '../app/config/dotenv'
+import '../../app/config/dotenv'
 import nodemailer from 'nodemailer'
 import { nodemailerMjmlPlugin } from 'nodemailer-mjml'
 import { join } from 'path'
