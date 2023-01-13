@@ -94,4 +94,15 @@ describe('Stop parking controller', () => {
     expect(serverResponse.status).toBe(404)
     expect(serverResponse.response).toEqual('Item Not Exists!')
   })
+  test('throws if use case throws', async () => {
+    const { sut, stopParkingUseCaseStub } = systemUnderTest()
+    jest.spyOn(stopParkingUseCaseStub, 'execute')
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const clientRequest = {
+      request: '0123456789'
+    }
+    const serverResponse = await sut.handle(clientRequest)
+    expect(serverResponse.status).toBe(500)
+    expect(serverResponse.response).toEqual('Internal Error')
+  })
 })
