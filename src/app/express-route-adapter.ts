@@ -14,7 +14,7 @@ export default class ExpressRouteAdapter {
       const { ticket, licensePlate, created_at, hour } = serverResponse.response
 
       if (serverResponse.status === 201) {
-        await new EmailProvider().sendEmail(email, ticket, licensePlate, created_at, hour)
+        void new EmailProvider().sendEmail(email, ticket, licensePlate, created_at, hour)
 
         return res.status(serverResponse.status).json(serverResponse.response)
       }

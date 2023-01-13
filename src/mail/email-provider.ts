@@ -5,21 +5,29 @@ import { join } from 'path'
 import { generateBarcode } from './helpers/generate-barcode'
 
 export class EmailProvider {
-  async sendEmail (to: string, ticket: string, licensePlate: string, created_at: string, hour: string): Promise<void> {
-    let testAccount = await nodemailer.createTestAccount()
+  async sendEmail (
+    to: string,
+    ticket: string,
+    licensePlate: string,
+    created_at: string,
+    hour: string
+  ): Promise<void> {
     const transport = nodemailer.createTransport({
       host: 'smtp.ethereal.email',
       port: 587,
       secure: false,
       auth: {
-        user: testAccount.user,
-        pass: testAccount.pass
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     })
 
-    transport.use('compile', nodemailerMjmlPlugin({ templateFolder: join(__dirname, './helpers/') }))
+    transport.use(
+      'compile',
+      nodemailerMjmlPlugin({ templateFolder: join(__dirname, './helpers/') })
+    )
 
-    const message = transport.sendMail({
+    await transport.sendMail({
       from: 'Parking manager <noreplay@parking_manager.com>',
       to,
       subject: 'Your parking ticket',
@@ -32,7 +40,5 @@ export class EmailProvider {
         barcode: generateBarcode(ticket)
       }
     })
-    console.log('Message sent: %s', (await message).messageId)
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(await message))
   }
 }
