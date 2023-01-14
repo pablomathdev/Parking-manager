@@ -43,6 +43,6 @@ export class EmailProvider {
         barcode: generateBarcode(ticket)
       }
     })
-    console.log(testAccount.user, testAccount.pass)
+    console.log('account test Email:' + '\n' + testAccount.user + '\n' + testAccount.pass)
   }
 }
