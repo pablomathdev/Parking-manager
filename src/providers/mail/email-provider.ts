@@ -12,13 +12,16 @@ export class EmailProvider {
     created_at: string,
     hour: string
   ): Promise<void> {
+    const testAccount = await nodemailer.createTestAccount()
+
     const transport = nodemailer.createTransport({
+
       host: 'smtp.ethereal.email',
       port: 587,
       secure: false,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: testAccount.user,
+        pass: testAccount.pass
       }
     })
 
@@ -40,5 +43,6 @@ export class EmailProvider {
         barcode: generateBarcode(ticket)
       }
     })
+    console.log(testAccount.user, testAccount.pass)
   }
 }

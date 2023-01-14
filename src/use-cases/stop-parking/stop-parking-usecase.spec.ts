@@ -5,7 +5,9 @@ import DateProvider from '../../providers/date/date-provider'
 
 import MockDate from 'mockdate'
 import dayjs from 'dayjs'
-MockDate.set(dayjs('Fri, Jan 13, 2023 10:51 AM').format('ddd, MMM D, YYYY h:mm A'))
+MockDate.set(
+  dayjs('Fri, Jan 13, 2023 10:51 AM').format('ddd, MMM D, YYYY h:mm A')
+)
 
 const makeVehicleRepository = (): any => {
   class VehicleRepositoryStub implements VehicleRepositoryInterface {
@@ -39,7 +41,7 @@ const makeVehicleRepository = (): any => {
         licensePlate: 'XXXXX',
         type: 'any-type'
       }
-      return new Promise(resolve => resolve({ ...item, ...updates }))
+      return new Promise((resolve) => resolve({ ...item, ...updates }))
     }
 
     async create (element: any): Promise<any> {
@@ -52,10 +54,17 @@ class StopParkingUseCase implements UseCase {
   constructor (private readonly vehicleRepository: VehicleRepositoryInterface) {}
   async execute (input: any): Promise<any> {
     const vehicle = await this.vehicleRepository.findByTicket(input)
-    const vehicleUpdated = await this.vehicleRepository.update(vehicle.id as string, { end_date: DateProvider.dateNow() })
-    DateProvider.compare(vehicleUpdated.end_date as string, vehicleUpdated.start_date)
-
-    return null
+    const vehicleUpdated = await this.vehicleRepository.update(
+      vehicle.id as string,
+      { end_date: DateProvider.dateNow() }
+    )
+    // const calcTolerance = DateProvider.compare(vehicleUpdated.end_date as string, vehicleUpdated.start_date)
+    return {
+      id: vehicleUpdated.id,
+      start_date: vehicleUpdated.start_date,
+      end_date: vehicleUpdated.end_date,
+      ticket: vehicleUpdated.ticket.ticket
+    }
   }
 }
 
@@ -84,15 +93,24 @@ describe('Stop Parking Use Case', () => {
 
     await sut.execute(ticket)
 
-    expect(updateSpy).toHaveBeenCalledWith('6d9e1bae-460c-40a0-ad4e-1f4a8713919f', { end_date: 'Fri, Jan 13, 2023 10:51 AM' })
+    expect(updateSpy).toHaveBeenCalledWith(
+      '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
+      { end_date: 'Fri, Jan 13, 2023 10:51 AM' }
+    )
   })
-  test('calls DateProvider with correct values', async () => {
+
+  test('should returns a vehicle if successfully', async () => {
     const { sut } = systemUnderTest()
-    const compareSpy = jest.spyOn(DateProvider, 'compare')
+
     const ticket = '0123456789'
 
-    await sut.execute(ticket)
+    const result = await sut.execute(ticket)
 
-    expect(compareSpy).toHaveBeenCalledWith('Fri, Jan 13, 2023 10:51 AM', 'Fri, Jan 13, 2023 10:36 AM')
+    expect(result).toEqual({
+      end_date: 'Fri, Jan 13, 2023 10:51 AM',
+      id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
+      start_date: 'Fri, Jan 13, 2023 10:36 AM',
+      ticket: '0123456789'
+    })
   })
 })
