@@ -7,7 +7,22 @@ jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
 class DatabaseStub implements DatabaseVehicleInterface {
   async findByTicket (ticket: string): Promise<any> {
-
+    const vehicle = {
+      id: 'any_id',
+      start_date: 'any_date',
+      end_date: null,
+      ticket: {
+        id: 'any_id_ticket',
+        ticket: '0123456789'
+      },
+      email: 'testemail@email.com',
+      licensePlate: 'XXXXX',
+      type: 'any-type'
+    }
+    if (vehicle.ticket.ticket === ticket) {
+      return new Promise(resolve => resolve(vehicle))
+    }
+    return null
   }
 
   async update (id: string, updates: any): Promise<any> {
@@ -99,5 +114,10 @@ describe('Vehicle repository', () => {
     const findByTicketSpy = jest.spyOn(databaseStub, 'findByTicket')
     await sut.findByTicket('0123456789')
     expect(findByTicketSpy).toHaveBeenCalledWith('0123456789')
+  })
+  test('should returns a vehicle if findByTicket(method) sucessfully', async () => {
+    const { sut } = systemUnderTest()
+    const result = await sut.findByTicket('0123456789')
+    expect(result.ticket.ticket).toBe('0123456789')
   })
 })
