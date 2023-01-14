@@ -1,11 +1,12 @@
-import Database from '../../domain/interfaces/database-interface'
+
 import Vehicle from '../../domain/entities/vehicle'
 import VehicleRepositoryInterface from '../../domain/interfaces/vehicle-repository-interface'
+import DatabaseVehicleInterface from '../../domain/interfaces/database-vehicle'
 
 export default class VehicleRepository implements VehicleRepositoryInterface {
-  constructor (private readonly database: Database) { }
+  constructor (private readonly database: DatabaseVehicleInterface) { }
   async findByTicket (ticket: string): Promise<Vehicle> {
-    throw new Error('Method not implemented.')
+    return await this.database.findByTicket(ticket)
   }
 
   async update (id: string, updates: any): Promise<any> {

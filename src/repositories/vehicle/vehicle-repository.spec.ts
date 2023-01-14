@@ -1,11 +1,15 @@
 import Vehicle from '../../domain/entities/vehicle'
-import Database from '../../domain/interfaces/database-interface'
 import VehicleRepository from './vehicle-repository'
 
 import 'uuid'
+import DatabaseVehicleInterface from '../../domain/interfaces/database-vehicle'
 jest.mock('uuid', () => ({ v4: () => 'testId' }))
 
-class DatabaseStub implements Database {
+class DatabaseStub implements DatabaseVehicleInterface {
+  async findByTicket (ticket: string): Promise<any> {
+
+  }
+
   async update (id: string, updates: any): Promise<any> {
     const item = {
       id,
@@ -89,5 +93,11 @@ describe('Vehicle repository', () => {
 
     expect(result.id).toBe(item.id)
     expect(result.name).toBe('pablo')
+  })
+  test('should calls Database findByTicket(method) with correct value', async () => {
+    const { sut, databaseStub } = systemUnderTest()
+    const findByTicketSpy = jest.spyOn(databaseStub, 'findByTicket')
+    await sut.findByTicket('0123456789')
+    expect(findByTicketSpy).toHaveBeenCalledWith('0123456789')
   })
 })
