@@ -1,8 +1,6 @@
-import VehicleRepositoryInterface from 'domain/interfaces/vehicle-repository-interface'
-import UseCase from 'input/protocols/use-case'
-import Vehicle from 'domain/entities/vehicle'
-import DateProvider from '../../providers/date/date-provider'
-
+import VehicleRepositoryInterface from '../../domain/interfaces/vehicle-repository-interface'
+import Vehicle from '../../domain/entities/vehicle'
+import StopParkingUseCase from './stop-parking-usecase'
 import MockDate from 'mockdate'
 import dayjs from 'dayjs'
 MockDate.set(
@@ -49,23 +47,6 @@ const makeVehicleRepository = (): any => {
     }
   }
   return new VehicleRepositoryStub()
-}
-class StopParkingUseCase implements UseCase {
-  constructor (private readonly vehicleRepository: VehicleRepositoryInterface) {}
-  async execute (input: any): Promise<any> {
-    const vehicle = await this.vehicleRepository.findByTicket(input)
-    const vehicleUpdated = await this.vehicleRepository.update(
-      vehicle.id as string,
-      { end_date: DateProvider.dateNow() }
-    )
-    // const calcTolerance = DateProvider.compare(vehicleUpdated.end_date as string, vehicleUpdated.start_date)
-    return {
-      id: vehicleUpdated.id,
-      start_date: vehicleUpdated.start_date,
-      end_date: vehicleUpdated.end_date,
-      ticket: vehicleUpdated.ticket.ticket
-    }
-  }
 }
 
 const systemUnderTest = (): any => {

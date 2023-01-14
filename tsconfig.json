@@ -8,7 +8,6 @@
     "strictPropertyInitialization": false,
     "outDir": "dist",
     "rootDirs": ["src"],
-    "baseUrl": "src",
     "sourceMap": true,
     "types": ["jest", "node"]
   },

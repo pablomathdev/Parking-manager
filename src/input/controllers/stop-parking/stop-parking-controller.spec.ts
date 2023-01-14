@@ -1,5 +1,5 @@
 import StopParkingController from './stop-parking-controller'
-import UseCase from 'input/protocols/use-case'
+import UseCase from '../../protocols/use-case'
 
 const makeStopParkingUseCaseStub = (): any => {
   class StopParkingUseCaseStub implements UseCase {

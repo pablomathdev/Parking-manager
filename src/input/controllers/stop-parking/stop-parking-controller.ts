@@ -1,8 +1,7 @@
-import Controller from 'input/protocols/controller'
-import ServerResponse from 'input/helpers/server-response'
-import ClientRequest from 'input/helpers/client-request'
-import UseCase from 'input/protocols/use-case'
-
+import Controller from '../../protocols/controller'
+import ServerResponse from '../../helpers/server-response'
+import ClientRequest from '../../helpers/client-request'
+import UseCase from '../../protocols/use-case'
 export default class StopParkingController implements Controller {
   constructor (private readonly stopParkingUseCase: UseCase) {}
   async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
