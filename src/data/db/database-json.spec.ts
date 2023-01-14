@@ -52,4 +52,11 @@ describe('DatabaseJson', () => {
       created_at: dayjs().format('ddd, MMM D, YYYY h:mm A')
     })
   })
+  test('should find item for id', async () => {
+    const sut = new DatabaseJson('test')
+    await sut.save(item)
+    const result = await sut.findById('testId')
+
+    expect(result).toEqual(item)
+  })
 })
