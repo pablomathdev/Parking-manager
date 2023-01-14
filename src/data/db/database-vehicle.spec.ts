@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-useless-constructor */
-import DatabaseJson from './database-json'
+import DatabaseVehicle from './database-vehicle'
 import fs from 'fs/promises'
 import path from 'path'
 
@@ -14,18 +13,6 @@ const item = {
   email: 'testemail@email.com',
   licensePlate: 'XXXXX',
   type: 'any-type'
-}
-
-class DatabaseVehicle extends DatabaseJson {
-  constructor (file: string) {
-    super(file)
-  }
-
-  async findByTicket (ticket: string): Promise<any> {
-    const allData = await this.getFile()
-    const item = allData.find((item: { ticket: any }) => item.ticket.ticket === ticket)
-    return item
-  }
 }
 
 describe('DatabaseVehicle - findByTicket', () => {
