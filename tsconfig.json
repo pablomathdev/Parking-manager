@@ -7,10 +7,5 @@
     "resolveJsonModule": true,
     "strictPropertyInitialization": false,
     "outDir": "dist",
-    "rootDirs": ["src"],
-    "sourceMap": true,
-    "types": ["jest", "node"]
-  },
-
-  "include": ["src/**/*"]
+  }
 }
