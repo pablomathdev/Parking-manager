@@ -6,7 +6,6 @@ export default class StopParkingUseCase implements UseCase {
   constructor (private readonly vehicleRepository: VehicleRepositoryInterface) {}
   async execute (input: string): Promise<any> {
     const vehicle = await this.vehicleRepository.findByTicket(input)
-    console.log('vehicle_id', vehicle)
     if (vehicle) {
       const vehicleUpdated = await this.vehicleRepository.update(
         vehicle.id as string,
