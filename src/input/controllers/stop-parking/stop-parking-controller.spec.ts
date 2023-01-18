@@ -35,7 +35,7 @@ describe('Stop parking controller', () => {
     const { sut, stopParkingUseCaseStub } = systemUnderTest()
     const executeSpy = jest.spyOn(stopParkingUseCaseStub, 'execute')
     const clientRequest = {
-      request: '0123456789'
+      request: { ticket: '0123456789' }
     }
     await sut.handle(clientRequest)
     expect(executeSpy).toHaveBeenCalledWith('0123456789')

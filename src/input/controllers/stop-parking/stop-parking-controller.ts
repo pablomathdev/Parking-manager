@@ -7,7 +7,7 @@ export default class StopParkingController implements Controller {
   async handle (clientRequest: ClientRequest): Promise<ServerResponse> {
     try {
       const vehicle = await this.stopParkingUseCase.execute(
-        clientRequest.request
+        clientRequest.request.ticket
       )
 
       if (vehicle) {

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { registerVehicleControllerFactory } from '../../input/factories/factories'
+import { registerVehicleControllerFactory } from '../../input/factories/register-vehicle'
 import ExpressRouterAdapter from '../express-route-adapter'
 let startRoute = Router()
 

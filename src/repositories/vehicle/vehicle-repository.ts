@@ -6,7 +6,8 @@ import DatabaseVehicleInterface from '../../domain/interfaces/database-vehicle'
 export default class VehicleRepository implements VehicleRepositoryInterface {
   constructor (private readonly database: DatabaseVehicleInterface) { }
   async findByTicket (ticket: string): Promise<Vehicle> {
-    return await this.database.findByTicket(ticket)
+    const result = await this.database.findByTicket(ticket)
+    return result
   }
 
   async update (id: string, updates: any): Promise<any> {

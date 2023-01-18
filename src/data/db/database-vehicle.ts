@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-useless-constructor */
+import Ticket from '../../domain/entities/ticket'
 import DatabaseJson from './database-json'
 
 export default class DatabaseVehicle extends DatabaseJson {
@@ -6,9 +6,9 @@ export default class DatabaseVehicle extends DatabaseJson {
     super(file)
   }
 
-  async findByTicket (ticket: string): Promise<any> {
+  async findByTicket (ticket: string): Promise<Ticket> {
     const allData = await this.getFile()
-    const item = allData.find((item: { ticket: any }) => item.ticket.ticket === ticket)
+    const item = allData.find((item: { ticket: Ticket }) => item.ticket.ticket === ticket)
     return item
   }
 }

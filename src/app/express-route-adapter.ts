@@ -18,7 +18,10 @@ export default class ExpressRouteAdapter {
 
         return res.status(serverResponse.status).json(serverResponse.response)
       }
-      res.status(serverResponse.status).json(serverResponse.response)
+      if (serverResponse.status === 200) {
+        return res.status(serverResponse.status).json(serverResponse.response)
+      }
+      return res.status(serverResponse.status).json(serverResponse.response)
     }
   }
 }
