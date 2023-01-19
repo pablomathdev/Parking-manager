@@ -1,6 +1,14 @@
 import dayjs from 'dayjs'
 
 export default class DateProvider {
+  static monthyDayYear (): string {
+    return dayjs().format('MM/DD/YYYY')
+  }
+
+  static hourMinutesSeconds (): string {
+    return dayjs().format('h:mm:ss A')
+  }
+
   static dateNow (): any {
     return dayjs().format('ddd, MMM D, YYYY h:mm A')
   }

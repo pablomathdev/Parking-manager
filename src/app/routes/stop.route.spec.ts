@@ -7,6 +7,7 @@ import MockDate from 'mockdate'
 import dayjs from 'dayjs'
 import DatabaseVehicle from '../../data/db/database-vehicle'
 import DatabaseJson from '../../data/db/database-json'
+import DateProvider from '../../providers/date/date-provider'
 
 jest.mock('custom-uuid', () => ({ generateCustomUuid: () => '0123456789' }))
 MockDate.set(
@@ -49,8 +50,8 @@ describe('stop parking', () => {
           type: 'any_type',
           licensePlate: 'XXXXX',
           ticket: '0123456789',
-          created_at: dayjs().format('MM/DD/YYYY'),
-          hour: dayjs().format('h:mm:ss A')
+          created_at: DateProvider.monthyDayYear(),
+          hour: DateProvider.hourMinutesSeconds()
         }
       ])
     )
