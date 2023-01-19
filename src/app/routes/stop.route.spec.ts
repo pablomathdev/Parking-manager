@@ -5,6 +5,9 @@ import fs from 'fs/promises'
 import path from 'path'
 import MockDate from 'mockdate'
 import dayjs from 'dayjs'
+import DatabaseVehicle from '../../data/db/database-vehicle'
+import DatabaseJson from '../../data/db/database-json'
+
 jest.mock('custom-uuid', () => ({ generateCustomUuid: () => '0123456789' }))
 MockDate.set(
   dayjs('Fri, Jan 13, 2023 10:51 AM').format('ddd, MMM D, YYYY h:mm A')
@@ -52,12 +55,24 @@ describe('stop parking', () => {
       ])
     )
   })
-  test('should returns 200 if ticket exists', async () => {
+  afterAll(async () => {
+    await new DatabaseVehicle('vehicle').clear()
+    await new DatabaseJson('ticket').clear()
+  })
+  test('should returns 200(OK) if ticket exists', async () => {
     await request(app)
       .post('/stop')
       .send({
         ticket: '0123456789'
       })
       .expect(200)
+  })
+  test('should returns 404(Not found) if ticket not exists', async () => {
+    await request(app)
+      .post('/stop')
+      .send({
+        ticket: '012345678'
+      })
+      .expect(404)
   })
 })
