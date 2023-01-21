@@ -6,19 +6,24 @@ export default class StopParkingUseCase implements UseCase {
   constructor (private readonly vehicleRepository: VehicleRepositoryInterface) {}
   async execute (input: string): Promise<any> {
     const vehicle = await this.vehicleRepository.findByTicket(input)
+    if (!vehicle) {
+      return null
+    }
+    const time = DateProvider.compare(DateProvider.dateNow(), vehicle.start_date)
+
     if (vehicle) {
       const vehicleUpdated = await this.vehicleRepository.update(
         vehicle.id as string,
-        { end_date: DateProvider.dateNow() }
+        { end_date: DateProvider.dateNow(), time }
       )
+
       return {
         id: vehicleUpdated.id,
         start_date: vehicleUpdated.start_date,
         end_date: vehicleUpdated.end_date,
-        ticket: vehicleUpdated.ticket.ticket
+        ticket: vehicleUpdated.ticket.ticket,
+        time: vehicleUpdated.time
       }
     }
-    return null
-    // const calcTolerance = DateProvider.compare(vehicleUpdated.end_date as string, vehicleUpdated.start_date)
   }
 }

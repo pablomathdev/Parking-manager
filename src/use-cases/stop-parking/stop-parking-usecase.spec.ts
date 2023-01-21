@@ -76,7 +76,7 @@ describe('Stop Parking Use Case', () => {
 
     expect(updateSpy).toHaveBeenCalledWith(
       '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
-      { end_date: 'Fri, Jan 13, 2023 10:51 AM' }
+      { end_date: 'Fri, Jan 13, 2023 10:51 AM', time: 15 }
     )
   })
 
@@ -91,7 +91,8 @@ describe('Stop Parking Use Case', () => {
       end_date: 'Fri, Jan 13, 2023 10:51 AM',
       id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
       start_date: 'Fri, Jan 13, 2023 10:36 AM',
-      ticket: '0123456789'
+      ticket: '0123456789',
+      time: 15
     })
   })
 })

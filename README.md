@@ -5,7 +5,7 @@
 - ao registrar o veículo salvar a hora e data que o veículo iniciou o período no estacionamento
 - gerar um ticket
 - o estacionamento deve conter vagas para motos e carros
-- tolerancia de 10 minutos, se o veiculo ultrapassar a tolerancia,começar a cobrar
+- tolerancia de 15 minutos, se o veiculo ultrapassar a tolerancia,começar a cobrar
 - se não ultrapassar a tolerancia não haverá cobrança
 - moto 2 reais por hora
 - carro 3 reais por hora

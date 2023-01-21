@@ -20,8 +20,10 @@ export default class StopParkingController implements Controller {
         status: 404,
         response: 'Item Not Exists!'
       }
-    } catch {
+    } catch (error) {
+      console.log(error)
       return {
+
         status: 500,
         response: 'Internal Error'
       }
