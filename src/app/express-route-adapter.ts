@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import ClientRequest from '../input/helpers/client-request'
 import Controller from '../input/protocols/controller'
 import { EmailProvider } from '../providers/mail/email-provider'
+import calcPricePerHour from './helpers/calc-price-per-hour'
 
 export default class ExpressRouteAdapter {
   static execute (controller: Controller) {
@@ -19,6 +20,8 @@ export default class ExpressRouteAdapter {
         return res.status(serverResponse.status).json(serverResponse.response)
       }
       if (serverResponse.status === 200) {
+        const { type, end_date } = serverResponse.response
+        calcPricePerHour(type, end_date)
         return res.status(serverResponse.status).json(serverResponse.response)
       }
       return res.status(serverResponse.status).json(serverResponse.response)

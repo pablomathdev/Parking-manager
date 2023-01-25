@@ -1,29 +1,9 @@
-import dayjs from 'dayjs'
-import DateProvider from '../providers/date/date-provider'
+import calcPricePerHour from './calc-price-per-hour'
 import MockDate from 'mockdate'
+import dayjs from 'dayjs'
 MockDate.set(
   dayjs('Wed, Jan 25, 2023 10:50 AM').format('ddd, MMM D, YYYY h:mm A')
 )
-
-function calcPricePerHour (typeVehicle: string, end_date: string): number {
-  let price = 0
-  const minutes = DateProvider.compare(DateProvider.dateNow(), end_date)
-  let hours = dayjs().diff(end_date, 'hour')
-  if (hours === 0) {
-    hours = 1
-  }
-
-  if (minutes <= 15) {
-    return price
-  }
-  if (minutes > 15 && typeVehicle === 'Car') {
-    price = 3 * hours
-  }
-  if (minutes > 15 && typeVehicle === 'Motocycle') {
-    price = 2 * hours
-  }
-  return price
-}
 
 describe('Calculate price per hour of parking', () => {
   test('if you exceed the 15 minutes of tolerance, you must return the value of one hour', () => {

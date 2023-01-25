@@ -92,6 +92,7 @@ describe('Stop Parking Use Case', () => {
       id: '6d9e1bae-460c-40a0-ad4e-1f4a8713919f',
       start_date: 'Fri, Jan 13, 2023 10:36 AM',
       ticket: '0123456789',
+      type: 'any-type',
       time: 15
     })
   })

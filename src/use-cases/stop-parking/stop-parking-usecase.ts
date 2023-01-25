@@ -22,6 +22,7 @@ export default class StopParkingUseCase implements UseCase {
         start_date: vehicleUpdated.start_date,
         end_date: vehicleUpdated.end_date,
         ticket: vehicleUpdated.ticket.ticket,
+        type: vehicleUpdated.type,
         time: vehicleUpdated.time
       }
     }
