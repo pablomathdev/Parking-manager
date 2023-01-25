@@ -26,8 +26,12 @@ function calcPricePerHour (typeVehicle: string, end_date: string): number {
 }
 
 describe('Calculate price per hour of parking', () => {
-  test('should return 0 if vehicle type is motorcycle and still within the 15 minute tolerance', () => {
+  test('should return 0 if vehicle type is Motorcycle and still within the 15 minute tolerance', () => {
     const result = calcPricePerHour('Motocycle', 'Wed, Jan 25, 2023 10:35 AM')
+    expect(result).toBe(0)
+  })
+  test('should return 0 if vehicle type is Car and still within the 15 minute tolerance', () => {
+    const result = calcPricePerHour('Car', 'Wed, Jan 25, 2023 10:35 AM')
     expect(result).toBe(0)
   })
 })
