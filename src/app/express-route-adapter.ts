@@ -20,9 +20,9 @@ export default class ExpressRouteAdapter {
         return res.status(serverResponse.status).json(serverResponse.response)
       }
       if (serverResponse.status === 200) {
-        const { type, end_date } = serverResponse.response
-        calcPricePerHour(type, end_date)
-        return res.status(serverResponse.status).json(serverResponse.response)
+        const { type, end_date, ticket, start_date } = serverResponse.response
+        const price = calcPricePerHour(type, end_date)
+        return res.status(serverResponse.status).send({ ticket, start_date, end_date, price })
       }
       return res.status(serverResponse.status).json(serverResponse.response)
     }
