@@ -40,4 +40,8 @@ describe('Calculate price per hour of parking', () => {
     const result = calcPricePerHour('Car', 'Wed, Jan 25, 2023 10:35 AM')
     expect(result).toBe(0)
   })
+  test('should return price per hour', () => {
+    const result = calcPricePerHour('Car', 'Wed, Jan 25, 2023 8:00 AM')
+    expect(result).toBe(6)
+  })
 })
