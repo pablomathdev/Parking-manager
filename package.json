@@ -8,7 +8,8 @@
     "start:dev": "ts-node-dev --respawn --transpile-only src/app/config/server.ts",
     "test": "jest --runInBand --silent --coverage=false --passWithNoTests",
     "test:staged": "jest --runInBand --silent --coverage=false --passWithNoTests",
-    "test:coverage": "npm test -- --coverage"
+    "test:coverage": "npm test -- --coverage",
+    "badges": "npm run test:coverage && jest-coverage-badges --output './badges'"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +54,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "handlebars": "^4.7.7",
+    "jest-coverage-badges": "^1.1.2",
     "nodemailer": "^6.8.0",
     "nodemailer-mjml": "^1.2.1",
     "uuid": "^9.0.0"
