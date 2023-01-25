@@ -6,8 +6,7 @@
 </p>
 
 ---	
-##Parking management api
----
+## Parking management api
 
 - [x] Registrar veículo com email do motorista, tipo de veículo e placa
 - [x] Ao registrar o veículo salvar a hora e data que o veículo iniciou o período no estacionamento
