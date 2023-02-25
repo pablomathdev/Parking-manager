@@ -9,11 +9,12 @@
 ## Parking management api
 ---
 
+- [x] Register vehicle with driver email and license plate
 - [x] Registrar veículo com email do motorista, tipo de veículo e placa
-- [x] Ao registrar o veículo salvar a hora e data que o veículo iniciou o período no estacionamento
-- [x] Gerar um ticket e enviar para o email registrado
-- [x] Tolerancia de 15 minutos, se o veiculo ultrapassar a tolerancia,começar a cobrar
-- [x] Se não ultrapassar a tolerancia não haverá cobrança
-- [x] Moto 2 reais por hora
-- [x] Carro 3 reais por hora
-- [x] Finalizar o período (enviar o id do ticket), calcular o valor hora e informar ao usuário
+- [x] When registering the vehicle, save the time and date that the vehicle started the parking period
+- [x] Generate a ticket and send it to the registered email
+- [x] 15 minutes tolerance, if the vehicle exceeds the tolerance, it will start charging
+- [x] If you do not exceed the tolerance, there will be no charge.
+- [x] Motobike 2 BRL per hour
+- [x] Car 3 BRL per hour
+- [x] End the period (send the ticket id), calculate the hourly rate and inform the user
